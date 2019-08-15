@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="generator" content="Hexo 3.9.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.3.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.3.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.3.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.3.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    save_scroll: false,
+    copycode: {"enable":false,"show_result":false,"style":null},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    }
+  };
+</script>
+
+  <meta name="description" content="CMake管理工程在Linux平台下使用CMake生成Makefile并编译的流程如下：  编写CMake配置文件CMakeLists.txt 执行命令cmake PATH生成Makefile，PATH是CMakeLists.txt所在的目录。 使用make命令进行编译。  简单讲就是CMake是自动生成Makefile文件的工具 安装CMake1sudo apt-get install cmak">
+<meta name="keywords" content="CMake入门">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CMake入门">
+<meta property="og:url" content="http://yoursite.com/2019/07/09/CMake入门/index.html">
+<meta property="og:site_name" content="XuQi&#39;s Blog">
+<meta property="og:description" content="CMake管理工程在Linux平台下使用CMake生成Makefile并编译的流程如下：  编写CMake配置文件CMakeLists.txt 执行命令cmake PATH生成Makefile，PATH是CMakeLists.txt所在的目录。 使用make命令进行编译。  简单讲就是CMake是自动生成Makefile文件的工具 安装CMake1sudo apt-get install cmak">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-08-15T02:24:26.893Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CMake入门">
+<meta name="twitter:description" content="CMake管理工程在Linux平台下使用CMake生成Makefile并编译的流程如下：  编写CMake配置文件CMakeLists.txt 执行命令cmake PATH生成Makefile，PATH是CMakeLists.txt所在的目录。 使用make命令进行编译。  简单讲就是CMake是自动生成Makefile文件的工具 安装CMake1sudo apt-get install cmak">
+  <link rel="canonical" href="http://yoursite.com/2019/07/09/CMake入门/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>CMake入门 | XuQi's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  <div class="container sidebar-position-left">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">XuQi's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+  </ul>
+
+    
+
+</nav>
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content page-post-detail">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/09/CMake入门/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="XuQi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="XuQi's Blog">
+    </span>
+      <header class="post-header">
+
+        
+          <h1 class="post-title" itemprop="name headline">CMake入门
+
+            
+          </h1>
+        
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-07-09 13:15:39" itemprop="dateCreated datePublished" datetime="2019-07-09T13:15:39+00:00">2019-07-09</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-08-15 02:24:26" itemprop="dateModified" datetime="2019-08-15T02:24:26+00:00">2019-08-15</time>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="CMake管理工程"><a href="#CMake管理工程" class="headerlink" title="CMake管理工程"></a>CMake管理工程</h3><p>在Linux平台下使用CMake生成Makefile并编译的流程如下：</p>
+<ol>
+<li>编写CMake配置文件CMakeLists.txt</li>
+<li>执行命令cmake PATH生成<strong>Makefile</strong>，PATH是CMakeLists.txt所在的目录。</li>
+<li>使用make命令进行编译。</li>
+</ol>
+<p>简单讲就是<strong>CMake是自动生成Makefile文件的工具</strong></p>
+<h4 id="安装CMake"><a href="#安装CMake" class="headerlink" title="安装CMake"></a>安装CMake</h4><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install cmake</span><br></pre></td></tr></table></figure>
+
+<h4 id="创建CMakeLists-txt-骨架"><a href="#创建CMakeLists-txt-骨架" class="headerlink" title="创建CMakeLists.txt 骨架"></a>创建CMakeLists.txt 骨架</h4><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># CMake 最低版本号要求 不写会有警告</span></span><br><span class="line"><span class="keyword">cmake_minimum_required</span> (VERSION <span class="number">2.8</span>)</span><br><span class="line"><span class="comment"># 项目信息</span></span><br><span class="line"><span class="keyword">project</span> (Demo1)</span><br><span class="line"><span class="comment"># 指定生成目标</span></span><br><span class="line"><span class="keyword">add_executable</span>(Demo main.cpp)</span><br></pre></td></tr></table></figure>
+
+<h4 id="CMakeLists-txt中的编写方法"><a href="#CMakeLists-txt中的编写方法" class="headerlink" title="CMakeLists.txt中的编写方法"></a>CMakeLists.txt中的编写方法</h4><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">project</span>(Demo1) <span class="comment"># App的名称，需要修改⭐️</span></span><br><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">2.8</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#加载自定义模块</span></span><br><span class="line"><span class="keyword">set</span>(CMAKE_MODULE_PATH <span class="variable">$&#123;CMAKE_MODULE_PATH&#125;</span> <span class="string">"$&#123;PROJECT_SOURCE_DIR&#125;/cmake"</span>)</span><br><span class="line"><span class="comment">#设置库文件路径</span></span><br><span class="line"><span class="keyword">set</span>(LIBRARY_OUTPUT_PATH <span class="variable">$&#123;PROJECT_BINARY_DIR&#125;</span>/lib)</span><br><span class="line"><span class="comment">#设置可执行程序路径</span></span><br><span class="line"><span class="keyword">set</span>(EXECUTABLE_OUTPUT_PATH <span class="variable">$&#123;PROJECT_BINARY_DIR&#125;</span>/bin)</span><br><span class="line"><span class="comment">#设置子目录</span></span><br><span class="line"><span class="keyword">set</span>(SUB_DIR_LIST <span class="string">"Thread"</span> <span class="string">"Util"</span>) <span class="comment">#需要修改⭐️</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#安装目录</span></span><br><span class="line"><span class="keyword">set</span>(INSTALL_PATH_LIB lib)</span><br><span class="line"><span class="keyword">set</span>(INSTALL_PATH_INCLUDE <span class="keyword">include</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">foreach</span>(SUB_DIR <span class="variable">$&#123;SUB_DIR_LIST&#125;</span>)</span><br><span class="line">    <span class="comment">#遍历源文件</span></span><br><span class="line">    <span class="keyword">aux_source_directory</span>(src/<span class="variable">$&#123;SUB_DIR&#125;</span> SRC_LIST)</span><br><span class="line">    <span class="comment">#安装头文件至系统目录</span></span><br><span class="line">    <span class="keyword">install</span>(DIRECTORY src/<span class="variable">$&#123;SUB_DIR&#125;</span> DESTINATION <span class="variable">$&#123;INSTALL_PATH_INCLUDE&#125;</span> FILES_MATCHING PATTERN <span class="string">"*.h"</span>)</span><br><span class="line"><span class="keyword">endforeach</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment">#或者，搜集文件，并把文件列表赋给ToolKit_src_list</span></span><br><span class="line"><span class="keyword">file</span>(GLOB ToolKit_src_list <span class="variable">$&#123;ToolKit_Root&#125;</span>/*/*.cpp <span class="variable">$&#123;ToolKit_Root&#125;</span>/*/*.h <span class="variable">$&#123;ToolKit_Root&#125;</span>/*/*.c)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">set</span>(LINK_LIB_LIST)</span><br><span class="line"></span><br><span class="line"><span class="keyword">set</span>(ENABLE_OPENSSL <span class="keyword">true</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#查找openssl是否安装   需要修改⭐️</span></span><br><span class="line"><span class="keyword">find_package</span>(OpenSSL QUIET) </span><br><span class="line"><span class="keyword">if</span>(OPENSSL_FOUND <span class="keyword">AND</span> ENABLE_OPENSSL)</span><br><span class="line">    <span class="keyword">message</span>(STATUS <span class="string">"找到openssl库:\"$&#123;OPENSSL_INCLUDE_DIR&#125;\",ENABLE_OPENSSL宏已打开"</span>)</span><br><span class="line">    <span class="keyword">include_directories</span>(<span class="variable">$&#123;OPENSSL_INCLUDE_DIR&#125;</span>)</span><br><span class="line">    <span class="keyword">add_definitions</span>(-DENABLE_OPENSSL) <span class="comment"># 定义宏</span></span><br><span class="line">    <span class="keyword">list</span>(APPEND  LINK_LIB_LIST <span class="variable">$&#123;OPENSSL_LIBRARIES&#125;</span>)</span><br><span class="line"><span class="keyword">endif</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment">#打印库文件</span></span><br><span class="line"><span class="keyword">message</span>(STATUS <span class="string">"将链接依赖库:$&#123;LINK_LIB_LIST&#125;"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#引用头文件路径</span></span><br><span class="line"><span class="keyword">include_directories</span>(<span class="variable">$&#123;PROJECT_SOURCE_DIR&#125;</span>/src)</span><br><span class="line"><span class="comment">#使能c++11</span></span><br><span class="line"><span class="keyword">add_compile_options</span>(-std=c++<span class="number">11</span>)<span class="comment"># 需要修改⭐️</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改其他编译选项</span></span><br><span class="line"><span class="keyword">add_compile_options</span>(-Wno-deprecated-declarations)</span><br><span class="line"><span class="keyword">add_compile_options</span>(-Wno-predefined-identifier-outside-<span class="keyword">function</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#编译动态库</span></span><br><span class="line"><span class="keyword">add_library</span>(<span class="variable">$&#123;CMAKE_PROJECT_NAME&#125;</span>_shared SHARED <span class="variable">$&#123;SRC_LIST&#125;</span>)</span><br><span class="line"><span class="keyword">target_link_libraries</span>(<span class="variable">$&#123;CMAKE_PROJECT_NAME&#125;</span>_shared <span class="variable">$&#123;LINK_LIB_LIST&#125;</span>)</span><br><span class="line"><span class="keyword">set_target_properties</span>(<span class="variable">$&#123;CMAKE_PROJECT_NAME&#125;</span>_shared PROPERTIES OUTPUT_NAME <span class="string">"$&#123;CMAKE_PROJECT_NAME&#125;"</span>)</span><br><span class="line"><span class="keyword">install</span>(TARGETS <span class="variable">$&#123;CMAKE_PROJECT_NAME&#125;</span>_shared  ARCHIVE DESTINATION <span class="variable">$&#123;INSTALL_PATH_LIB&#125;</span> LIBRARY DESTINATION <span class="variable">$&#123;INSTALL_PATH_LIB&#125;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#编译静态库</span></span><br><span class="line"><span class="keyword">add_library</span>(<span class="variable">$&#123;CMAKE_PROJECT_NAME&#125;</span>_static STATIC <span class="variable">$&#123;SRC_LIST&#125;</span>)</span><br><span class="line"><span class="keyword">set_target_properties</span>(<span class="variable">$&#123;CMAKE_PROJECT_NAME&#125;</span>_static PROPERTIES OUTPUT_NAME <span class="string">"$&#123;CMAKE_PROJECT_NAME&#125;"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#安装静态库至系统目录</span></span><br><span class="line"><span class="keyword">install</span>(TARGETS <span class="variable">$&#123;CMAKE_PROJECT_NAME&#125;</span>_static ARCHIVE DESTINATION <span class="variable">$&#123;INSTALL_PATH_LIB&#125;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#测试程序的目录中也有CMakeLists.txt</span></span><br><span class="line"><span class="keyword">add_subdirectory</span>(tests)</span><br></pre></td></tr></table></figure>
+
+<h4 id="测试程序的CMakeList编写方法"><a href="#测试程序的CMakeList编写方法" class="headerlink" title="测试程序的CMakeList编写方法"></a>测试程序的CMakeList编写方法</h4><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 执行cp命令</span></span><br><span class="line"><span class="keyword">execute_process</span>(<span class="keyword">COMMAND</span> cp <span class="variable">$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;</span>/ssl.p12 <span class="variable">$&#123;EXECUTABLE_OUTPUT_PATH&#125;</span>/)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 当前目录加入TEST_SRC_LIST</span></span><br><span class="line"><span class="keyword">aux_source_directory</span>(. TEST_SRC_LIST) </span><br><span class="line"><span class="comment"># 遍历TEST_SRC_LIST</span></span><br><span class="line"><span class="keyword">foreach</span>(TEST_SRC <span class="variable">$&#123;TEST_SRC_LIST&#125;</span>)</span><br><span class="line">		<span class="comment"># 去掉后缀</span></span><br><span class="line">    <span class="keyword">STRING</span>(REGEX REPLACE <span class="string">"^\\./|\\.c[a-zA-Z0-9_]*$"</span> <span class="string">""</span> TEST_EXE_NAME <span class="variable">$&#123;TEST_SRC&#125;</span>)</span><br><span class="line">    <span class="keyword">message</span>(STATUS <span class="string">"添加测试程序:$&#123;TEST_EXE_NAME&#125;"</span>)</span><br><span class="line">    <span class="comment"># 每个cpp作为一个可执行文件</span></span><br><span class="line">    <span class="keyword">add_executable</span>(<span class="variable">$&#123;TEST_EXE_NAME&#125;</span> <span class="variable">$&#123;TEST_SRC&#125;</span>)</span><br><span class="line">		<span class="comment"># 连接动态库</span></span><br><span class="line">    <span class="keyword">target_link_libraries</span>(<span class="variable">$&#123;TEST_EXE_NAME&#125;</span> <span class="variable">$&#123;CMAKE_PROJECT_NAME&#125;</span>_shared <span class="variable">$&#123;LINK_LIB_LIST&#125;</span> pthread)</span><br><span class="line"></span><br><span class="line"><span class="keyword">endforeach</span>(TEST_SRC <span class="variable">$&#123;TEST_SRC_LIST&#125;</span>)</span><br></pre></td></tr></table></figure>
+
+<h5 id="cmake-find-package的基本原理"><a href="#cmake-find-package的基本原理" class="headerlink" title="cmake find_package的基本原理"></a>cmake find_package的基本原理</h5><p>比如说，我们需要一个第三方库 curl，那么我们的 CMakeLists.txt 需要指定头文件目录，和库文件，类似</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">include_directiories(/usr/<span class="keyword">include</span>/curl)</span><br><span class="line"><span class="keyword">target_link_libraries</span>(myprogram path/curl.so)</span><br></pre></td></tr></table></figure>
+
+<p>如果借助于cmake提供的finder会怎么样呢？使用cmake的Modules目录下的FindCURL.cmake，相应的CMakeList.txt 文件：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">find_package</span>(CURL REQUIRED)</span><br><span class="line"><span class="keyword">include_directories</span>(<span class="variable">$&#123;CURL_INCLUDE_DIR&#125;</span>)</span><br><span class="line"><span class="keyword">target_link_libraries</span>(curltest <span class="variable">$&#123;CURL_LIBRARY&#125;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>那么cmake是如何查找的呢？</p>
+<blockquote>
+<p>find_package()命令首先会在模块路径中寻找Find.cmake，这是查找库的一个典型方式。具体查找路径依次为CMake：变量{CMAKE_MODULE_PATH}中的所有目录。如果没有，然后再查看它自己的模块目录/share/cmake-x.y/Modules/（$CMAKE_ROOT的具体值可以通过CMake中message命令输出）。这称为模块模式。</p>
+</blockquote>
+<p>为了能支持各种常见的库和包，CMake自带了很多模块。可以通过命令 cmake –help-module-list （输入cmake –help，然后双击Tab会有命令提示）得到你的CMake支持的模块的列表： 直接查看模块路径。比如Ubuntu linux上，模块的路径是 ls /usr/share/cmake/Modules/：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">ll -th /usr/share/cmake-<span class="number">3.5</span>/Modules/</span><br><span class="line">......</span><br><span class="line">-rw-r--r--  <span class="number">1</span> root root  <span class="number">76</span>K Sep <span class="number">27</span>  <span class="number">2016</span> FindBoost.cmake</span><br><span class="line">-rw-r--r--  <span class="number">1</span> root root <span class="number">2.7</span>K Mar <span class="number">24</span>  <span class="number">2016</span> FindCoin3D.cmake</span><br><span class="line">-rw-r--r--  <span class="number">1</span> root root  <span class="number">77</span>K Mar <span class="number">24</span>  <span class="number">2016</span> FindCUDA.cmake</span><br><span class="line">-rw-r--r--  <span class="number">1</span> root root <span class="number">3.1</span>K Mar <span class="number">24</span>  <span class="number">2016</span> FindCups.cmake</span><br><span class="line">-rw-r--r--  <span class="number">1</span> root root <span class="number">2.4</span>K Mar <span class="number">24</span>  <span class="number">2016</span> FindCURL.cmake</span><br><span class="line">........</span><br></pre></td></tr></table></figure>
+
+<p>让我们以bzip2库为例。CMake中有个 FindBZip2.cmake 模块。只要使用 find_package(BZip2) 调用这个模块，cmake会自动给一些变量赋值，然后就可以在CMake脚本中使用它们了。变量的列表可以查看cmake模块文件，或者使用命令:</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">root@xy:~/cmake_practice/cmake_build/build_demo10<span class="comment"># cmake --help-module FindBZip2</span></span><br><span class="line">FindBZip2</span><br><span class="line"><span class="keyword">Try</span> to find BZip2</span><br><span class="line"></span><br><span class="line">Once done this will define</span><br><span class="line">::</span><br><span class="line">BZIP2_FOUND - system has BZip2</span><br><span class="line">BZIP2_INCLUDE_DIR - the BZip2 include directory</span><br><span class="line">BZIP2_LIBRARIES - Link these to use BZip2</span><br><span class="line">BZIP2_NEED_PREFIX - this is set <span class="keyword">if</span> the functions are prefixed with BZ2_</span><br><span class="line">BZIP2_VERSION_STRING - the version of BZip2 found (since CMake <span class="number">2.8</span>.<span class="number">8</span>)</span><br></pre></td></tr></table></figure>
+
+<h5 id="Filesystem"><a href="#Filesystem" class="headerlink" title="Filesystem"></a>Filesystem</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">file(GLOB &lt;variable&gt;</span><br><span class="line">     [LIST_DIRECTORIES true|false] [RELATIVE &lt;path&gt;] [CONFIGURE_DEPENDS]</span><br><span class="line">     [&lt;globbing-expressions&gt;...])</span><br><span class="line">file(GLOB_RECURSE &lt;variable&gt; [FOLLOW_SYMLINKS]</span><br><span class="line">     [LIST_DIRECTORIES true|false] [RELATIVE &lt;path&gt;] [CONFIGURE_DEPENDS]</span><br><span class="line">     [&lt;globbing-expressions&gt;...])</span><br></pre></td></tr></table></figure>
+
+<p>产生一个匹配 <code>&lt;globbing-expressions&gt;</code> 的文件列表并将它存储到变量 <code>&lt;variable&gt;</code> 中。文件名替代表达式和正则表达式相似，但更简单。如果 <code>RELATIVE</code> 标志位被设定，将返回指定路径的相对路径。结果将按字典顺序排序。</p>
+<p>如果 <code>CONFIGURE_DEPENDS</code> 标志位被指定，CMake 将在编译时给主构建系统添加逻辑来检查目标，以重新运行 <code>GLOB</code> 标志的命令。如果任何输出被改变，CMake都将重新生成这个构建系统。</p>
+<blockquote>
+<p>注意：我们不推荐使用 GLOB 来从源文件树收集源文件列表。如果当源文件添加或删除时没有 CMakeLists.txt 文件被修改，那么在 CMake 重新生成时并不会识别出它们。<code>CONFIGURE_DEPENDS</code> 标志位可能不会再所有生成器上可靠的工作，如果一个新的生成器在以后被添加，并不会被支持。如果项目使用它将会被卡主。即使 <code>CONFIGURE_DEPENDS</code> 可靠的工作，在每个重新构建的过程中做检查也十分浪费性能。</p>
+</blockquote>
+<h4 id="交叉编译配置"><a href="#交叉编译配置" class="headerlink" title="交叉编译配置"></a>交叉编译配置</h4><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SET</span>(TOOLSCHAIN_PATH /home/zero/sdk/gcc-<span class="number">4.6</span>.<span class="number">2</span>-glibc-<span class="number">2.13</span>-linaro-multilib-<span class="number">2011.12</span>/fsl-linaro-toolchain/)</span><br><span class="line"><span class="keyword">set</span>(TOOLCHAIN_HOST <span class="string">"$&#123;TOOLSCHAIN_PATH&#125;bin/arm-none-linux-gnueabi"</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">set</span>(TOOLCHAIN_CC <span class="string">"$&#123;TOOLCHAIN_HOST&#125;-gcc"</span>)</span><br><span class="line"><span class="keyword">set</span>(TOOLCHAIN_CXX <span class="string">"$&#123;TOOLCHAIN_HOST&#125;-g++"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Define the compiler</span></span><br><span class="line"><span class="keyword">set</span>(CMAKE_C_COMPILER <span class="variable">$&#123;TOOLCHAIN_CC&#125;</span>)</span><br><span class="line"><span class="keyword">set</span>(CMAKE_CXX_COMPILER <span class="variable">$&#123;TOOLCHAIN_CXX&#125;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#告诉cmake是进行交叉编译</span></span><br><span class="line"><span class="keyword">set</span>(CMAKE_CROSSCOMPILING <span class="keyword">TRUE</span>)</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/CMake入门/" rel="tag"># CMake入门</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2019/07/07/V2X之V2I介绍/" rel="next" title="V2X之V2I介绍">
+                  <i class="fa fa-chevron-left"></i> V2X之V2I介绍
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2019/07/17/V2x之ASN.1/" rel="prev" title="C-V2X之ASN.1">
+                  C-V2X之ASN.1 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">XuQi</p>
+  <div class="site-description motion-element" itemprop="description"></div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">40</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">标签</span>
+        
+      </div>
+    
+  </nav>
+
+
+
+        </div>
+      </div>
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#CMake管理工程"><span class="nav-number">1.</span> <span class="nav-text">CMake管理工程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装CMake"><span class="nav-number">1.1.</span> <span class="nav-text">安装CMake</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建CMakeLists-txt-骨架"><span class="nav-number">1.2.</span> <span class="nav-text">创建CMakeLists.txt 骨架</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CMakeLists-txt中的编写方法"><span class="nav-number">1.3.</span> <span class="nav-text">CMakeLists.txt中的编写方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#测试程序的CMakeList编写方法"><span class="nav-number">1.4.</span> <span class="nav-text">测试程序的CMakeList编写方法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#cmake-find-package的基本原理"><span class="nav-number">1.4.1.</span> <span class="nav-text">cmake find_package的基本原理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Filesystem"><span class="nav-number">1.4.2.</span> <span class="nav-text">Filesystem</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#交叉编译配置"><span class="nav-number">1.5.</span> <span class="nav-text">交叉编译配置</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">XuQi</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.3.0</div>
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+      </div>
+
+    
+
+  </div>
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+<script src="/js/utils.js?v=7.3.0"></script>
+  <script src="/js/motion.js?v=7.3.0"></script>
+
+
+  <script src="/js/schemes/muse.js?v=7.3.0"></script>
+
+
+<script src="/js/next-boot.js?v=7.3.0"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+  
+  <script src="/js/scrollspy.js?v=7.3.0"></script>
+<script src="/js/post-details.js?v=7.3.0"></script>
+
+
+</body>
+</html>

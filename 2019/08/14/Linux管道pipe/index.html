@@ -63,12 +63,12 @@
 <meta property="og:site_name" content="XuQi&#39;s Blog">
 <meta property="og:description" content="Linux进程间通信之管道什么是管道？管道是一种最基本的IPC机制，作用于有血缘关系的进程之间，完成数据传递。调用pipe系统函数即可创建一个管道。  其本质是一个伪文件(实为内核缓冲区)  由两个文件描述符引用，一个表示读端，一个表示写端。  规定数据从管道的写端流入管道，从读端流出。   管道的原理:  管道实为内核使用环形队列机制，借助内核缓冲区(4k)实现。 例如:  1ps -ef |">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/.com//image-20190814221735897.png">
-<meta property="og:updated_time" content="2019-08-15T03:24:44.876Z">
+<meta property="og:image" content="http://yoursite.com/2019/08/14/Linux管道pipe/image-20190814221735897.png">
+<meta property="og:updated_time" content="2019-08-15T03:27:12.525Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux管道pipe">
 <meta name="twitter:description" content="Linux进程间通信之管道什么是管道？管道是一种最基本的IPC机制，作用于有血缘关系的进程之间，完成数据传递。调用pipe系统函数即可创建一个管道。  其本质是一个伪文件(实为内核缓冲区)  由两个文件描述符引用，一个表示读端，一个表示写端。  规定数据从管道的写端流入管道，从读端流出。   管道的原理:  管道实为内核使用环形队列机制，借助内核缓冲区(4k)实现。 例如:  1ps -ef |">
-<meta name="twitter:image" content="http://yoursite.com/.com//image-20190814221735897.png">
+<meta name="twitter:image" content="http://yoursite.com/2019/08/14/Linux管道pipe/image-20190814221735897.png">
   <link rel="canonical" href="http://yoursite.com/2019/08/14/Linux管道pipe/">
 
 
@@ -240,7 +240,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-08-15 03:24:44" itemprop="dateModified" datetime="2019-08-15T03:24:44+00:00">2019-08-15</time>
+                <time title="修改时间：2019-08-15 03:27:12" itemprop="dateModified" datetime="2019-08-15T03:27:12+00:00">2019-08-15</time>
               </span>
             
           
@@ -279,7 +279,7 @@
 
 <p>函数调用成功返回r/w两个文件描述符。无需open，但需手动close。规定：fd[0] → r； fd[1] → w，就像0对应标准输入，1对应标准输出一样。向管道文件读写数据其实是在读写内核缓冲区。</p>
 <p>管道创建成功以后，创建该管道的进程（父进程）同时掌握着管道的读端和写端。如何实现父子进程间通信呢？通常可以采用如下步骤：</p>
-<p><img src="/.com//image-20190814221735897.png" alt="image-20190814221735897"></p>
+<p><img src="/2019/08/14/Linux管道pipe/image-20190814221735897.png" alt="image-20190814221735897"></p>
 <h5 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h5><ol>
 <li>父进程调用pipe函数创建管道，得到两个文件描述符fd[0]、fd[1]指向管道的读端和写端。</li>
 <li>父进程调用fork创建子进程，那么子进程也有两个文件描述符指向同一管道。</li>

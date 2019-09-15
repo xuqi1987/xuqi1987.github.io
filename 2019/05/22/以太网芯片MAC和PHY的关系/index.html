@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="generator" content="Hexo 3.9.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.3.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.3.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.3.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.3.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    save_scroll: false,
+    copycode: {"enable":false,"show_result":false,"style":null},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    }
+  };
+</script>
+
+  <meta name="description" content="以太网媒体接入控制器(MAC)和物理接口收发器(PHY)以太网MAC是什么?MAC即Media Access Control,即媒体访问控制子层协议.该协议位于OSI七层协议中数据链路层的下半部分,主要负责控制与连接物理层的物理介质.在发送数据的时候,MAC协议可以事先判断是否可以发送数据,如果可以发送将给数据加上一些控制信息,最终将数据以及控制信息以规定的格式发送到物理层;在接收数据的时候,MA">
+<meta name="keywords" content="phy">
+<meta property="og:type" content="article">
+<meta property="og:title" content="以太网芯片MAC和PHY的关系">
+<meta property="og:url" content="http://yoursite.com/2019/05/22/以太网芯片MAC和PHY的关系/index.html">
+<meta property="og:site_name" content="XuQi&#39;s Blog">
+<meta property="og:description" content="以太网媒体接入控制器(MAC)和物理接口收发器(PHY)以太网MAC是什么?MAC即Media Access Control,即媒体访问控制子层协议.该协议位于OSI七层协议中数据链路层的下半部分,主要负责控制与连接物理层的物理介质.在发送数据的时候,MAC协议可以事先判断是否可以发送数据,如果可以发送将给数据加上一些控制信息,最终将数据以及控制信息以规定的格式发送到物理层;在接收数据的时候,MA">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/2019/05/22/以太网芯片MAC和PHY的关系/17110824-2bfe7fec917a445f89a0e28e3fb0aacd.jpg">
+<meta property="og:updated_time" content="2019-09-15T18:52:47.992Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="以太网芯片MAC和PHY的关系">
+<meta name="twitter:description" content="以太网媒体接入控制器(MAC)和物理接口收发器(PHY)以太网MAC是什么?MAC即Media Access Control,即媒体访问控制子层协议.该协议位于OSI七层协议中数据链路层的下半部分,主要负责控制与连接物理层的物理介质.在发送数据的时候,MAC协议可以事先判断是否可以发送数据,如果可以发送将给数据加上一些控制信息,最终将数据以及控制信息以规定的格式发送到物理层;在接收数据的时候,MA">
+<meta name="twitter:image" content="http://yoursite.com/2019/05/22/以太网芯片MAC和PHY的关系/17110824-2bfe7fec917a445f89a0e28e3fb0aacd.jpg">
+  <link rel="canonical" href="http://yoursite.com/2019/05/22/以太网芯片MAC和PHY的关系/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>以太网芯片MAC和PHY的关系 | XuQi's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  <div class="container sidebar-position-left">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">XuQi's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+  </ul>
+
+    
+
+</nav>
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content page-post-detail">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/22/以太网芯片MAC和PHY的关系/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="XuQi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="XuQi's Blog">
+    </span>
+      <header class="post-header">
+
+        
+          <h1 class="post-title" itemprop="name headline">以太网芯片MAC和PHY的关系
+
+            
+          </h1>
+        
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-05-22 09:39:43" itemprop="dateCreated datePublished" datetime="2019-05-22T09:39:43+00:00">2019-05-22</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-09-15 18:52:47" itemprop="dateModified" datetime="2019-09-15T18:52:47+00:00">2019-09-15</time>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h4 id="以太网媒体接入控制器-MAC-和物理接口收发器-PHY"><a href="#以太网媒体接入控制器-MAC-和物理接口收发器-PHY" class="headerlink" title="以太网媒体接入控制器(MAC)和物理接口收发器(PHY)"></a>以太网媒体接入控制器(MAC)和物理接口收发器(PHY)</h4><h5 id="以太网MAC是什么"><a href="#以太网MAC是什么" class="headerlink" title="以太网MAC是什么?"></a>以太网MAC是什么?</h5><p>MAC即Media Access Control,即媒体访问控制子层协议.该协议位于OSI七层协议中<strong>数据链路层的下半部分</strong>,主要负责控制与连接物理层的物理介质.在发送数据的时候,MAC协议可以事先判断是否可以发送数据,如果可以发送将给数据加上一些控制信息,最终将数据以及控制信息以规定的格式发送到物理层;在接收数据的时候,MAC协议首先判断输入的信息并是否发生传输错误,如果没有错误,则去掉控制信息发送至LLC层.该层协议是以太网MAC由IEEE-802.3以太网标准定义.最新的MAC同时支持10Mbps和100Mbps两种速率.</p>
+<a id="more"></a>
+
+<p>以太网数据链路层其实包含MAC(介质访问控制)子层和LLC(逻辑链路控制)子层.一块以太网卡MAC芯片的作用不但要实现MAC子层和LLC子层的功能,还要提供符合规范的PCI界面以实现和主机的数据交换.</p>
+<p>MAC从PCI总线收到IP数据包(或者其他网络层协议的数据包)后,将之拆分并重新打包成最大1518Byte,最小64Byte的帧.这个帧里面包括了目标MAC地址、自己的源MAC地址和数据包里面的协议类型(比如IP数据包的类型用80表示).最后还有一个DWORD(4Byte)的CRC 码.</p>
+<p>可是目标的MAC地址是哪里来的呢?这牵扯到一个ARP协议(介乎于网络层和数据链路层的一个协议).第一次传送某个目的IP地址的数据的时候,先会发出一个ARP包,其MAC的目标地址是广播地址,里面说到：”谁是xxx.xxx.xxx.xxx这个IP地址的主人？”因为是广播包,所有这个局域网的主机都收到了这个ARP请求.收到请求的主机将这个IP地址和自己的相比较,如果不相同就不予理会,如果相同就发出ARP响应包.这个IP地址的主机收到这个ARP请求包后回复的ARP响应里说到:”我是这个IP地址的主人”.这个包里面就包括了他的MAC地址.以后的给这个IP地址的帧的目标MAC 地址就被确定了.(其它的协议如IPX/SPX也有相应的协议完成这些操作.)</p>
+<p>IP地址和MAC地址之间的关联关系保存在主机系统里面,叫做ARP表,由驱动程序和操作系统完成.在Microsoft的系统里面可以用arp- a的命令查看ARP表.收到数据帧的时候也是一样,做完CRC以后,如果没有CRC效验错误,就把帧头去掉,把数据包拿出来通过标准的借口传递给驱动和上层的协议客栈,最终正确的达到我们的应用程序.</p>
+<p>还有一些控制帧,例如流控帧也需要MAC直接识别并执行相应的行为.</p>
+<p>以太网MAC芯片的一端接计算机PCI总线,另外一端就接到PHY芯片上,它们之间是通过MII接口链接的.</p>
+<h5 id="什么是MII"><a href="#什么是MII" class="headerlink" title="什么是MII?"></a>什么是MII?</h5><p>MII即媒体独立接口,它是IEEE-802.3定义的以太网行业标准.”媒体独立”表明在不对MAC硬件重新设计或替换的情况下,任何类型的PHY设备都可以正常工作.它包括一个数据接口,以及一个MAC和PHY之间的管理接口.</p>
+<ul>
+<li>数据接口包括分别用于发送器和接收器的两条独立信道.每条信道都有自己的数据,时钟和控制信号.MII数据接口总共需要16个信号,包括 TX_ER,TXD&lt;3:0&gt;,TX_EN,TX_CLK, COL,RXD&lt;3:0&gt;,RX_EX,RX_CLK,CRS,RX_DV等.MII以4位半字节方式传送数据双向传输,时钟速率 25MHz.其工作速率可达100Mb/s;</li>
+<li>MII管理接口是个双信号接口,一个是时钟信号,另一个是数据信号.通过管理接口,上层能监视和控制PHY.其管理是使用SMI(Serial Management Interface)总线通过读写PHY的寄存器来完成的.PHY里面的部分寄存器是IEEE定义的,这样PHY把自己的目前的状态反映到寄存器里面,MAC通过SMI总线不断的读取PHY的状态寄存器以得知目前PHY的状态,例如连接速度,双工的能力等.当然也可以通过SMI设置PHY的寄存器达到控制的目的,例如流控的打开关闭,自协商模式还是强制模式等.不论是物理连接的MII总线和SMI总线还是PHY的状态寄存器和控制寄存器都是有 IEEE的规范的,因此不同公司的MAC和PHY一样可以协调工作.当然为了配合不同公司的PHY的自己特有的一些功能,驱动需要做相应的修改.</li>
+</ul>
+<p>MII支持10Mbps和100Mbps的操作,一个接口由14根线组成,它的支持还是比较灵活的,但是有一个缺点是因为它一个端口用的信号线太多,如果一个8端口的交换机要用到112根线,16端口就要用到224根线,到32端口的话就要用到448根线,一般按照这个接口做交换机,是不太现实的,所以现代的交换机的制作都会用到其它的一些从MII简化出来的标准,比如RMII,SMII,GMII等.</p>
+<p>RMII是简化的MII接口,在数据的收发上它比MII接口少了一倍的信号线,所以它一般要求是50MHz的总线时钟.RMII一般用在多端口的交换机,它不是每个端口安排收,发两个时钟,而是所有的数据端口公用一个时钟用于所有端口的收发,这里就节省了不少的端口数目.RMII的一个端口要求7个数据线,比MII少了一倍,所以交换机能够接入多一倍数据的端口.和MII一样,RMII支持10Mbps和100Mbps的总线接口速度.</p>
+<p>SMII是由思科提出的一种媒体接口,它有比RMII更少的信号线数目,S表示串行的意思.因为它只用一根信号线传送发送数据,一根信号线传输接受数据,所以为了满足100Mbps的总线接口速度的需求,它的时钟频率就达到了125MHz,为什么用125MHz,是因为数据线里面会传送一些控制信息.SMII一个端口仅用4根信号线完成100Mbps的传输,比起RMII差不多又少了一倍的信号线.SMII在工业界的支持力度是很高的.同理,所有端口的数据收发都公用同一个外部的125MHz时钟.</p>
+<p>GMII是千兆网的MII接口,这个也有相应的RGMII接口,表示简化了的GMII接口.</p>
+<p><img src="/2019/05/22/以太网芯片MAC和PHY的关系/17110824-2bfe7fec917a445f89a0e28e3fb0aacd.jpg" alt="17110824-2bfe7fec917a445f89a0e28e3fb0aacd"></p>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/phy/" rel="tag"># phy</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2019/05/21/STL从0开始/" rel="next" title="STL从0开始">
+                  <i class="fa fa-chevron-left"></i> STL从0开始
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2019/05/30/C++编程指南/" rel="prev" title="C++编程指南">
+                  C++编程指南 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">XuQi</p>
+  <div class="site-description motion-element" itemprop="description"></div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">29</span>
+        <span class="site-state-item-name">标签</span>
+        
+      </div>
+    
+  </nav>
+
+
+
+        </div>
+      </div>
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#以太网媒体接入控制器-MAC-和物理接口收发器-PHY"><span class="nav-number">1.</span> <span class="nav-text">以太网媒体接入控制器(MAC)和物理接口收发器(PHY)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#以太网MAC是什么"><span class="nav-number">1.1.</span> <span class="nav-text">以太网MAC是什么?</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#什么是MII"><span class="nav-number">1.2.</span> <span class="nav-text">什么是MII?</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">XuQi</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.3.0</div>
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+      </div>
+
+    
+
+  </div>
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+<script src="/js/utils.js?v=7.3.0"></script>
+  <script src="/js/motion.js?v=7.3.0"></script>
+
+
+  <script src="/js/schemes/muse.js?v=7.3.0"></script>
+
+
+<script src="/js/next-boot.js?v=7.3.0"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+  
+  <script src="/js/scrollspy.js?v=7.3.0"></script>
+<script src="/js/post-details.js?v=7.3.0"></script>
+
+
+</body>
+</html>

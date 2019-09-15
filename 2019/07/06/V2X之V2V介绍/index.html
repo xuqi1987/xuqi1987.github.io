@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="generator" content="Hexo 3.9.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.3.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.3.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.3.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.3.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    save_scroll: false,
+    copycode: {"enable":false,"show_result":false,"style":null},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    }
+  };
+</script>
+
+  <meta name="description" content="术语定义主车host vehicle，HV装有车载单元且运行应用程序的目标车辆。 远车remote vehicle，RV与主车配合能定时广播V2X消息的背景车辆。 车载单元on-board unit，OBU安装在车辆上的可实现V2X通讯，支持V2X应用的硬件单元。 路侧单元road side unit，RSU安装在路边的可实现V2X通讯，支持V2X应用的硬件单元。 V2X车载单元与其他设备通讯，">
+<meta name="keywords" content="V2X​">
+<meta property="og:type" content="article">
+<meta property="og:title" content="V2X之V2V介绍">
+<meta property="og:url" content="http://yoursite.com/2019/07/06/V2X之V2V介绍/index.html">
+<meta property="og:site_name" content="XuQi&#39;s Blog">
+<meta property="og:description" content="术语定义主车host vehicle，HV装有车载单元且运行应用程序的目标车辆。 远车remote vehicle，RV与主车配合能定时广播V2X消息的背景车辆。 车载单元on-board unit，OBU安装在车辆上的可实现V2X通讯，支持V2X应用的硬件单元。 路侧单元road side unit，RSU安装在路边的可实现V2X通讯，支持V2X应用的硬件单元。 V2X车载单元与其他设备通讯，">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/2019/07/06/V2X之V2V介绍/1563158083146.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/06/V2X之V2V介绍/1563172581437.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/06/V2X之V2V介绍/1563172589726.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/06/V2X之V2V介绍/1563172597774.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/06/V2X之V2V介绍/1563171827023.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/06/V2X之V2V介绍/1563172631192.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/06/V2X之V2V介绍/1563172661703.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/06/V2X之V2V介绍/1564103642053.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/06/V2X之V2V介绍/1564103730655.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/06/V2X之V2V介绍/1563172721792.png">
+<meta property="og:updated_time" content="2019-09-15T18:52:47.956Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="V2X之V2V介绍">
+<meta name="twitter:description" content="术语定义主车host vehicle，HV装有车载单元且运行应用程序的目标车辆。 远车remote vehicle，RV与主车配合能定时广播V2X消息的背景车辆。 车载单元on-board unit，OBU安装在车辆上的可实现V2X通讯，支持V2X应用的硬件单元。 路侧单元road side unit，RSU安装在路边的可实现V2X通讯，支持V2X应用的硬件单元。 V2X车载单元与其他设备通讯，">
+<meta name="twitter:image" content="http://yoursite.com/2019/07/06/V2X之V2V介绍/1563158083146.png">
+  <link rel="canonical" href="http://yoursite.com/2019/07/06/V2X之V2V介绍/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>V2X之V2V介绍 | XuQi's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  <div class="container sidebar-position-left">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">XuQi's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+  </ul>
+
+    
+
+</nav>
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content page-post-detail">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/06/V2X之V2V介绍/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="XuQi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="XuQi's Blog">
+    </span>
+      <header class="post-header">
+
+        
+          <h1 class="post-title" itemprop="name headline">V2X之V2V介绍
+
+            
+          </h1>
+        
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-07-06 13:13:52" itemprop="dateCreated datePublished" datetime="2019-07-06T13:13:52+00:00">2019-07-06</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-09-15 18:52:47" itemprop="dateModified" datetime="2019-09-15T18:52:47+00:00">2019-09-15</time>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><a href="http://www.caicv.org.cn/a1664.html" target="_blank" rel="noopener"></a></p>
+<h2 id="术语定义"><a href="#术语定义" class="headerlink" title="术语定义"></a>术语定义</h2><h6 id="主车host-vehicle，HV"><a href="#主车host-vehicle，HV" class="headerlink" title="主车host vehicle，HV"></a>主车host vehicle，HV</h6><p>装有车载单元且运行应用程序的目标车辆。</p>
+<h6 id="远车remote-vehicle，RV"><a href="#远车remote-vehicle，RV" class="headerlink" title="远车remote vehicle，RV"></a>远车remote vehicle，RV</h6><p>与主车配合能定时广播V2X消息的背景车辆。</p>
+<h6 id="车载单元on-board-unit，OBU"><a href="#车载单元on-board-unit，OBU" class="headerlink" title="车载单元on-board unit，OBU"></a>车载单元on-board unit，OBU</h6><p>安装在车辆上的可实现V2X通讯，支持V2X应用的硬件单元。</p>
+<h6 id="路侧单元road-side-unit，RSU"><a href="#路侧单元road-side-unit，RSU" class="headerlink" title="路侧单元road side unit，RSU"></a>路侧单元road side unit，RSU</h6><p>安装在路边的可实现V2X通讯，支持V2X应用的硬件单元。</p>
+<h6 id="V2X"><a href="#V2X" class="headerlink" title="V2X"></a>V2X</h6><p>车载单元与其他设备通讯，包括但不限于车载单元之间通讯（V2V），车载单元与路侧单元通讯（V2I），车载单元与行人设备通讯（V2P），车载单元与网络之间通讯（V2N）。</p>
+<a id="more"></a>
+
+<h5 id="缩略语"><a href="#缩略语" class="headerlink" title="缩略语"></a>缩略语</h5><p>4G：第四代移动通信技术the 4th Generation mobile communication technology<br>5G：第五代移动通信技术the 5th Generation mobile communication technology<br>ABS：制动防抱死系统Anti-lock Braking System<br>ADS：应用数据交换服务Application Data-Exchange Service<br>API：应用程序编程接口Application Programming Interface<br>ASN.1：抽象语法标记Abstract Syntax Notation One<br>AVW：异常车辆提醒Abnormal Vehicle Warning<br>BSM：基本安全消息Basic Safety Message<br>BSW/LCW：盲区预警/变道预警Blind Spot Warning / Lane Change Warning<br>CAV：防撞距离Collision Avoidance Range<br>C-ITS：中国智能交通产业联盟China ITS Industry Alliance<br>CLW：车辆失控预警Control Lost Warning<br>CSAE：中国汽车工程学会Society of Automotive Engineers of China<br>DE：数据元素Data Element<br>DF：数据帧Data Frame<br>DME：专用短程通信管理实体DSRC Management Entity<br>DNPW：逆向超车预警Do Not Pass Warning<br>DSM：专用短程通信短消息DSRC Short Message<br>DSRC：专用短程通信Dedicated Short Range Communications<br>DTI：到交叉口的距离Distance-to-Intersection<br>HMI：人机交互界面Human Machine Interface<br>EBW：紧急制动预警Emergency Brake Warning<br>ESP：车身电子稳定系统Electronic Stability Program</p>
+<p>ETC：电子不停车收费系统Electronic Toll Collection<br>ETSI：欧洲电信标准化协会European Telecommunications Standards Institute<br>EVW：紧急车辆提醒Emergency Vehicle Warning<br>FCW：前向碰撞预警Forward Collision Warning<br>GB：中国国家标准Guo Biao （Nation Standard）<br>GLOSA：绿波车速引导Green Light Optimal Speed Advisory<br>GNSS：全球导航卫星系统Global Navigation Satellite System<br>GPS：全球定位系统Global Positioning System<br>HLN：道路危险状况预警Hazardous Location Warning<br>HV：主车Host Vehicle<br>ICW：交叉路口碰撞预警Intersection Collision Warning<br>ID：标识Identification<br>ISO：国际标准化组织International Standards Organization<br>ITS：智能交通系统Intelligent Transport Systems<br>IVS：车内标牌In-Vehicle Signage<br>LDW：车道偏离预警系统Lane Departure Warning<br>LTA：左转辅助Left Turn Assistant<br>LTE-V2X：基于LTE的车载设备与其他设备通讯Long Term Evolution-Vehicle to EverythingNHTSA：美国高速公路安全管理局National Highway Traffic Safety Administration<br>OBU：车载单元On-Board Unit<br>P2P：点对点Point to Point<br>RSA：路侧单元发布的交通事件消息Road Side Alert<br>RSM：路侧单元消息Road Side Message<br>RSU：路侧单元Road Side Unit<br>RV：远车Remote Vehicle<br>SAE：国际自动机工程师学会Society of Automotive Engineers International<br>SLW：限速预警Speed Limit Warning<br>SPAT：信号灯消息Signal Phase and Timing Message<br>SPI：服务提供者接口Service Provider Interface<br>SVW：闯红灯预警Signal Violation Warning<br>TC：目标分类Target Classification<br>TCS：牵引力控制系统Traction Control System<br>TJW：前方拥堵提醒Traffic Jam Warning<br>TTC：碰撞预计时间Time-to-Collision<br>TTI：到达交叉口预计时间Time-to-Intersection<br>UPER：非对齐压缩编码规则Unaligned Packet Encoding Rules<br>V2I：车载单元与路侧单元通讯Vehicle to Infrastructure<br>V2P：车载单元与行人设备通讯Vehicle to Pedestrians<br>V2V：车载单元之间通讯Vehicle to Vehicle<br>V2X：车载单元与其他设备通讯Vehicle to Everything<br>VIN：车辆识别码Vehicle ID Number<br>VNFP：汽车近场支付Vehicle Near-Field Payment<br>VRUCW：弱势交通参与者碰撞预警Vulnerable Road User Collision Warning</p>
+<h3 id="相互距离计算"><a href="#相互距离计算" class="headerlink" title="相互距离计算"></a>相互距离计算</h3><h4 id="定位"><a href="#定位" class="headerlink" title="定位"></a>定位</h4><h5 id="GPS原始定位"><a href="#GPS原始定位" class="headerlink" title="GPS原始定位"></a>GPS原始定位</h5><h6 id="有效性"><a href="#有效性" class="headerlink" title="有效性"></a>有效性</h6><ul>
+<li>4颗以上，每颗信噪比S/N大于20</li>
+<li>连续两次有速度，认为有车速，有车速更新GPS</li>
+<li>每秒走过的距离大于60，GPS无效</li>
+</ul>
+<h5 id="辅助定位"><a href="#辅助定位" class="headerlink" title="辅助定位"></a>辅助定位</h5><h6 id="高精度地图"><a href="#高精度地图" class="headerlink" title="高精度地图"></a>高精度地图</h6><h6 id="陀螺仪定位"><a href="#陀螺仪定位" class="headerlink" title="陀螺仪定位"></a>陀螺仪定位</h6><h4 id="车辆距离"><a href="#车辆距离" class="headerlink" title="车辆距离"></a>车辆距离</h4><h5 id="17个一期应用"><a href="#17个一期应用" class="headerlink" title="17个一期应用"></a>17个一期应用</h5><p><img src="/2019/07/06/V2X之V2V介绍/1563158083146.png" alt="1563158083146"></p>
+<h3 id="V2V功能列表"><a href="#V2V功能列表" class="headerlink" title="V2V功能列表"></a>V2V功能列表</h3><h4 id="碰撞预警FCW-Forward-Collision-Warning"><a href="#碰撞预警FCW-Forward-Collision-Warning" class="headerlink" title="碰撞预警FCW(Forward Collision Warning)"></a>碰撞预警FCW(Forward Collision Warning)</h4><p><strong>FCW 基本工作原理如下：</strong></p>
+<ul>
+<li>分析接收到的 RV 消息，筛选出位于<strong>同一车道</strong>前方（前方同车道）区域的 RV；</li>
+<li>进一步筛选处于<strong>一定距离范围</strong>内的 RV 作为潜在威胁车辆；</li>
+<li>计 算 每 一 个 潜 在 威 胁 车 辆 <strong>碰 撞 时 间</strong>（TTC：time-to-collision） 或 <strong>防 撞 距 离</strong>（collision avoidance range），筛选出与 HV 存在碰撞危险的威胁车辆；</li>
+<li>若有多个威胁车辆，则筛选出最紧急的威胁车 </li>
+</ul>
+<p><strong>场景：</strong></p>
+<p><img src="/2019/07/06/V2X之V2V介绍/1563172581437.png" alt="1563172581437"></p>
+<p><img src="/2019/07/06/V2X之V2V介绍/1563172589726.png" alt="1563172589726"></p>
+<p><img src="/2019/07/06/V2X之V2V介绍/1563172597774.png" alt="1563172597774"></p>
+<p><strong>RV数据交互需求：</strong></p>
+<p><img src="/2019/07/06/V2X之V2V介绍/1563171827023.png" alt="1563171827023"></p>
+<h5 id="追尾碰撞"><a href="#追尾碰撞" class="headerlink" title="追尾碰撞"></a>追尾碰撞</h5><p>车速&gt;= 15 km/h 时，同车道上同向行驶预计 3S 后将发生碰撞时给用户预警，<br>计算公式为：两车距离 m /(自车车速 m/s - 前车车速 m/s)</p>
+<h5 id="正面碰撞-（异常行驶）"><a href="#正面碰撞-（异常行驶）" class="headerlink" title="正面碰撞 （异常行驶）"></a>正面碰撞 （异常行驶）</h5><p>车速&gt;= 15 km/h 时，同车道上反向行驶预计 3S 后将发生碰撞时给用户预警，<br>计算公式为：两车距离 m /(自车车速 m/s + 前车车速 m/s)</p>
+<h5 id="高速跟驰碰撞"><a href="#高速跟驰碰撞" class="headerlink" title="高速跟驰碰撞"></a>高速跟驰碰撞</h5><p>车速&gt;=60km/h 时，同车道上与前车距离&lt;= 3m 时给用户预警</p>
+<h5 id="低速跟驰碰撞"><a href="#低速跟驰碰撞" class="headerlink" title="低速跟驰碰撞"></a>低速跟驰碰撞</h5><p>15km/h &gt; 车速 &gt; 2km/h 时，同车道上与前车距离&lt;= 0.5 M 时给用户预警</p>
+<h5 id="贴车碰撞"><a href="#贴车碰撞" class="headerlink" title="贴车碰撞"></a>贴车碰撞</h5><p>车速&gt; 0 km/h 时，同车道上前车与自车距离&lt; 0.2M 时给用户预警</p>
+<ul>
+<li>较高精度</li>
+</ul>
+<h4 id="路口碰撞预警ICW（Intersection-Collision-Warning）"><a href="#路口碰撞预警ICW（Intersection-Collision-Warning）" class="headerlink" title="路口碰撞预警ICW（Intersection Collision Warning）"></a>路口碰撞预警ICW（Intersection Collision Warning）</h4><p><strong>ICW基本工作原理如下：</strong></p>
+<ul>
+<li><p>分析接收到的RV消息，筛选出位于<strong>交叉路口左侧</strong>（intersecting left）或<strong>交叉路口右侧</strong>（intersecting right）区域的RV。RV消息可能是由RV发出或从路侧单元获取；</p>
+</li>
+<li><p>进一步筛选处于<strong>一定距离范围</strong>内的RV作为潜在威胁车辆；</p>
+</li>
+<li><p>计算每一个潜在威胁车辆<strong>到达路口的时间</strong>（TTI：time-to-intersection）和<strong>到达路口的距离</strong>（DTI：distance-to-intersection），筛选出与HV存在碰撞危险的威胁车辆；</p>
+</li>
+<li><p>若有多个威胁车辆，则筛选出最紧急的威胁车辆；</p>
+</li>
+<li><p>系统通过HMI对HV驾驶员进行相应的碰撞预警。</p>
+</li>
+</ul>
+<p><strong>场景：</strong></p>
+<p><img src="/2019/07/06/V2X之V2V介绍/1563172631192.png" alt="1563172631192"></p>
+<p><img src="/2019/07/06/V2X之V2V介绍/1563172661703.png" alt="1563172661703"></p>
+<h5 id="短距离碰撞预警"><a href="#短距离碰撞预警" class="headerlink" title="短距离碰撞预警"></a>短距离碰撞预警</h5><p>自车车速 &gt; 15km/h 时，根据车速、地图上距离计算出两车路线有交叉，且两车在都没有过交差点前最近距离&lt;= 10 M/6M 时，提示用户交叉路口碰撞危险。注意：某方过交叉点后变为与另一方反向或同向行驶时，两车即使距离&lt;= 10M 时不用提示用户。</p>
+<p><strong>注：</strong>1) 当存在同一方向上有若干辆车同时满足前置条件时，报警界面上同一方向只显示一辆报警车；<br>        2) 当存在在不同方向上共有若干辆车同时满足前置条件时，<strong>报警界面上不同方向上都需要显示一辆报警车；</strong></p>
+<h5 id="短时间内碰撞预警"><a href="#短时间内碰撞预警" class="headerlink" title="短时间内碰撞预警"></a>短时间内碰撞预警</h5><p>自车车速 &gt; 15km/h 时，根据车速、地图上距离计算出两车分别经过交叉点时时间间隔 &lt; 1S 时，提示用户交叉路口碰撞危险。</p>
+<h5 id="高速车辆预警"><a href="#高速车辆预警" class="headerlink" title="高速车辆预警"></a>高速车辆预警</h5><p>自车车速 &gt; 5km/h 时，行驶到距离<strong>路口两车交叉点</strong> 20M 以内时，如果检测到横向车道 50M 内有车辆即将与自车交汇，且对方车速&gt;= 60M 时，提示用户路口碰撞危险。</p>
+<h5 id="同方向车辆预警"><a href="#同方向车辆预警" class="headerlink" title="同方向车辆预警"></a>同方向车辆预警</h5><p>自车车速 &gt; 15km/h 时，行驶到距离<strong>路口交叉点</strong> 50m 以内时，如果检测到<strong>横向右侧</strong>车道上<strong>第一辆车打开右转方向灯时</strong>，提示用户路口碰撞危险。</p>
+<p>注：怎么判断打开</p>
+<h5 id="对方减速碰撞预警"><a href="#对方减速碰撞预警" class="headerlink" title="对方减速碰撞预警"></a>对方减速碰撞预警</h5><p>距离路口交叉点 50m 以内，自车车速 &gt; 30km/h 时，如果对方将先到交叉点，且对方车速 &gt; 60 km/h 时，提示用户交叉路口碰撞危险。</p>
+<h5 id="对方加速碰撞预警"><a href="#对方加速碰撞预警" class="headerlink" title="对方加速碰撞预警"></a>对方加速碰撞预警</h5><p>距离路口交叉点 50m 以内，自车车速 &gt; 30km/h 时，如果对方后到交叉点，且对方车速 &lt; 30km/h 时，提示用户交叉路口碰撞危险。</p>
+<p>？？ 30&lt; &lt;60怎么办？如果对方停在交叉路口，一直报警吗？</p>
+<h3 id="前车刹车预警（Brake-Warning-System）"><a href="#前车刹车预警（Brake-Warning-System）" class="headerlink" title="前车刹车预警（Brake Warning System）"></a>前车刹车预警（Brake Warning System）</h3><p>紧急制动预警（EBW：Emergency Brake Warning）是指，主车（HV）行驶在道路上，与前方行驶的远车（RV）存在一定距离，当前方RV进行紧急制动时，会将这一信息通过短程无线通信广播出来。HV检测到RV的紧急制动状态，若判断该RV事件与HV相关，则对HV驾驶员进行预警。本应用适用于城市郊区普通道路及高速公路可能发生制动追尾碰撞危险的预警。<br>EBW应用辅助驾驶员避免或减轻车辆追尾碰撞，提高道路行驶通行安全。</p>
+<h5 id="非低速刹车预警"><a href="#非低速刹车预警" class="headerlink" title="非低速刹车预警"></a>非低速刹车预警</h5><p>车速&gt;=15km/h时，同车道上前车与自车范围在A内刹车时，提示用户前车刹车预警。 A = 4 * (自车车速m/s)</p>
+<h5 id="低速刹车预警"><a href="#低速刹车预警" class="headerlink" title="低速刹车预警"></a>低速刹车预警</h5><p>车速 &lt; 15km/h时，同车道上前车与自车范围在A内刹车时，提示用户前车刹车预警。 A = 16 M</p>
+<p><strong>工作原理：</strong></p>
+<ul>
+<li>RV紧急制动时间，广播这一信息。</li>
+<li>HV接收到RV的信息，判断是否是紧急制动事件。</li>
+<li>HV将出现紧急事件</li>
+</ul>
+<p>EBW包括如下主要场景：<br>a）同车道（或相邻车道）HV前方紧邻RV发生紧急制动（图18）：<br>1）HV行驶在道路上，RV发生紧急制动事件；<br>2）HV和RV需具备短程无线通信能力；<br>3）EBW应用对HV驾驶员发出预警，提醒驾驶员前方紧急制动操作存在碰撞危险；<br>4）预警时机需确保HV驾驶员收到预警后，能有足够时间采取措施，避免与RV发生追尾碰撞。</p>
+<p><img src="/2019/07/06/V2X之V2V介绍/1564103642053.png" alt="1564103642053"></p>
+<p><img src="/2019/07/06/V2X之V2V介绍/1564103730655.png" alt="1564103730655"></p>
+<h4 id="左转弯分析（Left-Turn-Assistant）"><a href="#左转弯分析（Left-Turn-Assistant）" class="headerlink" title="左转弯分析（Left Turn Assistant）"></a>左转弯分析（Left Turn Assistant）</h4><p><strong>场景</strong></p>
+<p><img src="/2019/07/06/V2X之V2V介绍/1563172721792.png" alt="1563172721792"></p>
+<p><strong>ICW基本工作原理如下：</strong></p>
+<ul>
+<li>接收RV消息，筛选出相邻车道的迎面车辆（oncoming left）和远端车道迎面车辆（oncoming far left）</li>
+</ul>
+<h4 id="特种车辆避让提醒（如救护车、消防车等）（Special-Vehicle-Avoid-Notification）"><a href="#特种车辆避让提醒（如救护车、消防车等）（Special-Vehicle-Avoid-Notification）" class="headerlink" title="特种车辆避让提醒（如救护车、消防车等）（Special Vehicle Avoid Notification）"></a>特种车辆避让提醒（如救护车、消防车等）（Special Vehicle Avoid Notification）</h4><ul>
+<li>同路提醒<ul>
+<li>占道提醒</li>
+<li>邻道提醒</li>
+</ul>
+</li>
+<li>交汇提醒</li>
+</ul>
+<h4 id="高速安全距离提醒（Freeway-Safety-distance-Notification）"><a href="#高速安全距离提醒（Freeway-Safety-distance-Notification）" class="headerlink" title="高速安全距离提醒（Freeway Safety distance Notification）"></a>高速安全距离提醒（Freeway Safety distance Notification）</h4><ul>
+<li>200M以上</li>
+<li>100M以上</li>
+<li>100米内</li>
+</ul>
+<h4 id="故障车提醒"><a href="#故障车提醒" class="headerlink" title="故障车提醒"></a>故障车提醒</h4><ul>
+<li>发送故障信息</li>
+<li>故障车</li>
+</ul>
+<h4 id="危险路段提醒"><a href="#危险路段提醒" class="headerlink" title="危险路段提醒"></a>危险路段提醒</h4><ul>
+<li>发送ESP警告信息</li>
+<li>接收ESP警告信息</li>
+</ul>
+<h4 id="倒车预警"><a href="#倒车预警" class="headerlink" title="倒车预警"></a>倒车预警</h4><ul>
+<li>自车倒车提示</li>
+<li>前车倒车提示</li>
+</ul>
+<h4 id="警告信息历史记录"><a href="#警告信息历史记录" class="headerlink" title="警告信息历史记录"></a>警告信息历史记录</h4><h4 id="车队应用（跟驰、对讲）"><a href="#车队应用（跟驰、对讲）" class="headerlink" title="车队应用（跟驰、对讲）"></a>车队应用（跟驰、对讲）</h4><ul>
+<li>组车队</li>
+<li>跟驰</li>
+<li>对讲</li>
+</ul>
+<p>设计思路</p>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/V2X​/" rel="tag"># V2X​</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2019/07/05/C-V2X白皮书/" rel="next" title="C-V2X白皮书">
+                  <i class="fa fa-chevron-left"></i> C-V2X白皮书
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2019/07/07/V2X之V2I介绍/" rel="prev" title="V2X之V2I介绍">
+                  V2X之V2I介绍 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">XuQi</p>
+  <div class="site-description motion-element" itemprop="description"></div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">29</span>
+        <span class="site-state-item-name">标签</span>
+        
+      </div>
+    
+  </nav>
+
+
+
+        </div>
+      </div>
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#术语定义"><span class="nav-number">1.</span> <span class="nav-text">术语定义</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#主车host-vehicle，HV"><span class="nav-number">1.0.0.0.1.</span> <span class="nav-text">主车host vehicle，HV</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#远车remote-vehicle，RV"><span class="nav-number">1.0.0.0.2.</span> <span class="nav-text">远车remote vehicle，RV</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#车载单元on-board-unit，OBU"><span class="nav-number">1.0.0.0.3.</span> <span class="nav-text">车载单元on-board unit，OBU</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#路侧单元road-side-unit，RSU"><span class="nav-number">1.0.0.0.4.</span> <span class="nav-text">路侧单元road side unit，RSU</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#V2X"><span class="nav-number">1.0.0.0.5.</span> <span class="nav-text">V2X</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#缩略语"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">缩略语</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相互距离计算"><span class="nav-number">1.1.</span> <span class="nav-text">相互距离计算</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#定位"><span class="nav-number">1.1.1.</span> <span class="nav-text">定位</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#GPS原始定位"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">GPS原始定位</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#有效性"><span class="nav-number">1.1.1.1.1.</span> <span class="nav-text">有效性</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#辅助定位"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">辅助定位</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#高精度地图"><span class="nav-number">1.1.1.2.1.</span> <span class="nav-text">高精度地图</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#陀螺仪定位"><span class="nav-number">1.1.1.2.2.</span> <span class="nav-text">陀螺仪定位</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#车辆距离"><span class="nav-number">1.1.2.</span> <span class="nav-text">车辆距离</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#17个一期应用"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">17个一期应用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#V2V功能列表"><span class="nav-number">1.2.</span> <span class="nav-text">V2V功能列表</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#碰撞预警FCW-Forward-Collision-Warning"><span class="nav-number">1.2.1.</span> <span class="nav-text">碰撞预警FCW(Forward Collision Warning)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#追尾碰撞"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">追尾碰撞</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#正面碰撞-（异常行驶）"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">正面碰撞 （异常行驶）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#高速跟驰碰撞"><span class="nav-number">1.2.1.3.</span> <span class="nav-text">高速跟驰碰撞</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#低速跟驰碰撞"><span class="nav-number">1.2.1.4.</span> <span class="nav-text">低速跟驰碰撞</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#贴车碰撞"><span class="nav-number">1.2.1.5.</span> <span class="nav-text">贴车碰撞</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#路口碰撞预警ICW（Intersection-Collision-Warning）"><span class="nav-number">1.2.2.</span> <span class="nav-text">路口碰撞预警ICW（Intersection Collision Warning）</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#短距离碰撞预警"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">短距离碰撞预警</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#短时间内碰撞预警"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">短时间内碰撞预警</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#高速车辆预警"><span class="nav-number">1.2.2.3.</span> <span class="nav-text">高速车辆预警</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#同方向车辆预警"><span class="nav-number">1.2.2.4.</span> <span class="nav-text">同方向车辆预警</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#对方减速碰撞预警"><span class="nav-number">1.2.2.5.</span> <span class="nav-text">对方减速碰撞预警</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#对方加速碰撞预警"><span class="nav-number">1.2.2.6.</span> <span class="nav-text">对方加速碰撞预警</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#前车刹车预警（Brake-Warning-System）"><span class="nav-number">1.3.</span> <span class="nav-text">前车刹车预警（Brake Warning System）</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#非低速刹车预警"><span class="nav-number">1.3.0.1.</span> <span class="nav-text">非低速刹车预警</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#低速刹车预警"><span class="nav-number">1.3.0.2.</span> <span class="nav-text">低速刹车预警</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#左转弯分析（Left-Turn-Assistant）"><span class="nav-number">1.3.1.</span> <span class="nav-text">左转弯分析（Left Turn Assistant）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#特种车辆避让提醒（如救护车、消防车等）（Special-Vehicle-Avoid-Notification）"><span class="nav-number">1.3.2.</span> <span class="nav-text">特种车辆避让提醒（如救护车、消防车等）（Special Vehicle Avoid Notification）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#高速安全距离提醒（Freeway-Safety-distance-Notification）"><span class="nav-number">1.3.3.</span> <span class="nav-text">高速安全距离提醒（Freeway Safety distance Notification）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#故障车提醒"><span class="nav-number">1.3.4.</span> <span class="nav-text">故障车提醒</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#危险路段提醒"><span class="nav-number">1.3.5.</span> <span class="nav-text">危险路段提醒</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#倒车预警"><span class="nav-number">1.3.6.</span> <span class="nav-text">倒车预警</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#警告信息历史记录"><span class="nav-number">1.3.7.</span> <span class="nav-text">警告信息历史记录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#车队应用（跟驰、对讲）"><span class="nav-number">1.3.8.</span> <span class="nav-text">车队应用（跟驰、对讲）</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">XuQi</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.3.0</div>
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+      </div>
+
+    
+
+  </div>
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+<script src="/js/utils.js?v=7.3.0"></script>
+  <script src="/js/motion.js?v=7.3.0"></script>
+
+
+  <script src="/js/schemes/muse.js?v=7.3.0"></script>
+
+
+<script src="/js/next-boot.js?v=7.3.0"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+  
+  <script src="/js/scrollspy.js?v=7.3.0"></script>
+<script src="/js/post-details.js?v=7.3.0"></script>
+
+
+</body>
+</html>

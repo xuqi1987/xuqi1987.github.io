@@ -63,7 +63,7 @@
 <meta property="og:site_name" content="XuQi&#39;s Blog">
 <meta property="og:description" content="C++ 基础知识备忘常用字符串函数头文件include&amp;lt;string.h&amp;gt;1234strlen() // 实际字符串长度，不包括&apos;\0&apos;strcpy(dest,src) // 复制字符串，包括&apos;\0&apos;,如果src大于dest，crashstrncpy(dest,src,num) // 复制n个字符，不包括&apos;\0&apos;,如果src大于num，只复制num个const char *strstr">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-09-17T06:06:24.364Z">
+<meta property="og:updated_time" content="2019-09-17T08:33:35.506Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C++编程指南">
 <meta name="twitter:description" content="C++ 基础知识备忘常用字符串函数头文件include&amp;lt;string.h&amp;gt;1234strlen() // 实际字符串长度，不包括&apos;\0&apos;strcpy(dest,src) // 复制字符串，包括&apos;\0&apos;,如果src大于dest，crashstrncpy(dest,src,num) // 复制n个字符，不包括&apos;\0&apos;,如果src大于num，只复制num个const char *strstr">
@@ -238,7 +238,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-09-17 06:06:24" itemprop="dateModified" datetime="2019-09-17T06:06:24+00:00">2019-09-17</time>
+                <time title="修改时间：2019-09-17 08:33:35" itemprop="dateModified" datetime="2019-09-17T08:33:35+00:00">2019-09-17</time>
               </span>
             
           
@@ -257,6 +257,8 @@
         <h1 id="C-基础知识备忘"><a href="#C-基础知识备忘" class="headerlink" title="C++ 基础知识备忘"></a>C++ 基础知识备忘</h1><h3 id="常用字符串函数"><a href="#常用字符串函数" class="headerlink" title="常用字符串函数"></a>常用字符串函数</h3><h5 id="头文件"><a href="#头文件" class="headerlink" title="头文件"></a>头文件</h5><h5 id="include-lt-string-h-gt"><a href="#include-lt-string-h-gt" class="headerlink" title="include&lt;string.h&gt;"></a>include&lt;string.h&gt;</h5><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">strlen</span>() <span class="comment">// 实际字符串长度，不包括'\0'</span></span><br><span class="line"><span class="built_in">strcpy</span>(dest,src) <span class="comment">// 复制字符串，包括'\0',如果src大于dest，crash</span></span><br><span class="line"><span class="built_in">strncpy</span>(dest,src,num) <span class="comment">// 复制n个字符，不包括'\0',如果src大于num，只复制num个</span></span><br><span class="line"><span class="function"><span class="keyword">const</span> <span class="keyword">char</span> *<span class="title">strstr</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *str1, <span class="keyword">const</span> <span class="keyword">char</span> *str2)</span></span>; <span class="comment">// 在str1中查找str2,返回找到的起始地址，如果没找到返回null</span></span><br></pre></td></tr></table></figure>
 
 <a id="more"></a>
+
+
 
 <h3 id="函数重载定义"><a href="#函数重载定义" class="headerlink" title="函数重载定义"></a>函数重载定义</h3><p>C++特性，因为C++编译后的名字是带参数类型，所以相同函数名，参数不同(类型，个数，顺序)</p>
 <p><strong>当心隐式类型转换导致重载函数产生二义性</strong></p>

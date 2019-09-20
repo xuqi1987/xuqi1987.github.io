@@ -63,7 +63,7 @@
 <meta property="og:description" content="网卡选择不同于windows上，大部分的网卡都支持软AP ，linux下的网卡需要支持mode master的才可以做软AP 。具体识别方法如下 1、iwconfig识别 123iwconfig wlxec888fbd5d61 mode masterError for wireless request &amp;quot;Set Mode&amp;quot; (8B06) :    SET failed on d">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/2019/09/20/hostapd_dhcpd/1568948144309.png">
-<meta property="og:updated_time" content="2019-09-20T07:52:42.787Z">
+<meta property="og:updated_time" content="2019-09-20T08:59:51.985Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hostapd_dhcpd">
 <meta name="twitter:description" content="网卡选择不同于windows上，大部分的网卡都支持软AP ，linux下的网卡需要支持mode master的才可以做软AP 。具体识别方法如下 1、iwconfig识别 123iwconfig wlxec888fbd5d61 mode masterError for wireless request &amp;quot;Set Mode&amp;quot; (8B06) :    SET failed on d">
@@ -228,7 +228,7 @@
                 
               
 
-              <time title="创建时间：2019-09-20 09:12:57 / 修改时间：07:52:42" itemprop="dateCreated datePublished" datetime="2019-09-20T09:12:57+00:00">2019-09-20</time>
+              <time title="创建时间：2019-09-20 09:12:57 / 修改时间：08:59:51" itemprop="dateCreated datePublished" datetime="2019-09-20T09:12:57+00:00">2019-09-20</time>
             </span>
           
             
@@ -264,7 +264,7 @@
 <p><img src="/2019/09/20/hostapd_dhcpd/1568948144309.png" alt="1568948144309"></p>
 <p>即然如此，如何在未购买网卡前选择一款一定支持的网卡呢？wireless.kernel.org也给我们提供了一个方法 ，通过<a href="http://wireless.kernel.org/en/users/Devices" target="_blank" rel="noopener">http://wireless.kernel.org/en/users/Devices</a>  硬件列表<br>（该页按pci、usb、pcmcia接口类型做了区分，点开相应的类型即可查看具体的硬件）。当然，这个表里列出的并不完全，也并不能保证是最适合做软AP的硬件 。是否识合请参查看上面的三个方法。</p>
 <h4 id="编译hostapd"><a href="#编译hostapd" class="headerlink" title="编译hostapd"></a>编译hostapd</h4><ol>
-<li>编译依赖<a href="http://www.linuxfromscratch.org/blfs/view/svn/basicnet/libnl.html" target="_blank" rel="noopener">http://www.linuxfromscratch.org/blfs/view/svn/basicnet/libnl.html</a></li>
+<li>编译依赖<a href="http://lists.infradead.org/pipermail/libnl/2014-July/001549.html" target="_blank" rel="noopener">http://lists.infradead.org/pipermail/libnl/2014-July/001549.html</a></li>
 <li></li>
 </ol>
 <h4 id="hostapd"><a href="#hostapd" class="headerlink" title="hostapd"></a>hostapd</h4><p>选择好网卡，接下来就是linux下的软件配置。以linux mint为例（基于ubuntu ，以下的示例同样适用于ubuntu）</p>

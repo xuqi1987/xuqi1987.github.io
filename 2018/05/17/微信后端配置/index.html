@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="generator" content="Hexo 3.9.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.3.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.3.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.3.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.3.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    save_scroll: false,
+    copycode: {"enable":false,"show_result":false,"style":null},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    }
+  };
+</script>
+
+  <meta name="description" content="参考： http://blog.csdn.net/linhan8/article/details/8746110 要通过微信配置，必须先服务器端配置好 第一步 服务器端配置服务器接入指南： http://mp.weixin.qq.com/wiki/8/f9a0b8382e0b77d87b3bcc1ce6fbc104.html 开发者提交信息后，微信服务器将发送GET请求到填写的服务器地址URL上，">
+<meta name="keywords" content="微信">
+<meta property="og:type" content="article">
+<meta property="og:title" content="微信后端实现">
+<meta property="og:url" content="http://yoursite.com/2018/05/17/微信后端配置/index.html">
+<meta property="og:site_name" content="XuQi&#39;s Blog">
+<meta property="og:description" content="参考： http://blog.csdn.net/linhan8/article/details/8746110 要通过微信配置，必须先服务器端配置好 第一步 服务器端配置服务器接入指南： http://mp.weixin.qq.com/wiki/8/f9a0b8382e0b77d87b3bcc1ce6fbc104.html 开发者提交信息后，微信服务器将发送GET请求到填写的服务器地址URL上，">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://cl.ly/3H34353N1c1f/Image%202016-03-17%20at%2012.17.38%20%E4%B8%8A%E5%8D%88.png">
+<meta property="og:updated_time" content="2019-10-19T12:19:36.715Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="微信后端实现">
+<meta name="twitter:description" content="参考： http://blog.csdn.net/linhan8/article/details/8746110 要通过微信配置，必须先服务器端配置好 第一步 服务器端配置服务器接入指南： http://mp.weixin.qq.com/wiki/8/f9a0b8382e0b77d87b3bcc1ce6fbc104.html 开发者提交信息后，微信服务器将发送GET请求到填写的服务器地址URL上，">
+<meta name="twitter:image" content="http://cl.ly/3H34353N1c1f/Image%202016-03-17%20at%2012.17.38%20%E4%B8%8A%E5%8D%88.png">
+  <link rel="canonical" href="http://yoursite.com/2018/05/17/微信后端配置/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>微信后端实现 | XuQi's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  <div class="container sidebar-position-left">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">XuQi's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+  </ul>
+
+    
+
+</nav>
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content page-post-detail">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/17/微信后端配置/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="XuQi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="XuQi's Blog">
+    </span>
+      <header class="post-header">
+
+        
+          <h1 class="post-title" itemprop="name headline">微信后端实现
+
+            
+          </h1>
+        
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2018-05-17 19:52:00" itemprop="dateCreated datePublished" datetime="2018-05-17T19:52:00+00:00">2018-05-17</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-10-19 12:19:36" itemprop="dateModified" datetime="2019-10-19T12:19:36+00:00">2019-10-19</time>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><strong>参考：</strong></p>
+<p><a href>http://blog.csdn.net/linhan8/article/details/8746110</a></p>
+<p>要通过微信配置，必须先服务器端配置好</p>
+<h3 id="第一步-服务器端配置"><a href="#第一步-服务器端配置" class="headerlink" title="第一步 服务器端配置"></a>第一步 服务器端配置</h3><p>服务器接入指南：</p>
+<p><a href>http://mp.weixin.qq.com/wiki/8/f9a0b8382e0b77d87b3bcc1ce6fbc104.html</a></p>
+<p>开发者提交信息后，微信服务器将发送GET请求到填写的服务器地址URL上，GET请求携带四个参数：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>signature</td>
+<td>微信加密签名，signature结合了开发者填写的token参数和请求中的timestamp参数、nonce参数。</td>
+</tr>
+<tr>
+<td>timestamp</td>
+<td>时间戳</td>
+</tr>
+<tr>
+<td>nonce</td>
+<td>随机数</td>
+</tr>
+<tr>
+<td>echostr</td>
+<td>随机字符串</td>
+</tr>
+</tbody></table>
+<a id="more"></a>
+
+<p>开发者通过检验signature对请求进行校验（下面有校验方式）。若确认此次GET请求来自微信服务器，请原样返回echostr参数内容，则接入生效，成为开发者成功，否则接入失败。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">加密/校验流程如下：</span><br><span class="line">1. 将token、timestamp、nonce三个参数进行字典序排序</span><br><span class="line">2. 将三个参数字符串拼接成一个字符串进行sha1加密</span><br><span class="line">3. 开发者获得加密后的字符串可与signature对比，标识该请求来源于微信</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"># -*- coding:utf8 -*-</span><br><span class="line">import time</span><br><span class="line">from flask import Flask,request, make_response</span><br><span class="line">import hashlib</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line">@app.route(&apos;/wechat&apos;, methods = [&apos;GET&apos;, &apos;POST&apos;] )</span><br><span class="line">def wechat_auth():</span><br><span class="line"></span><br><span class="line">    if request.method == &apos;GET&apos;:</span><br><span class="line">        token = &apos;xq123456&apos; # your token</span><br><span class="line">        query = request.args  # GET 方法附上的参数</span><br><span class="line">        signature = query.get(&apos;signature&apos;, &apos;&apos;)</span><br><span class="line">        timestamp = query.get(&apos;timestamp&apos;, &apos;&apos;)</span><br><span class="line">        nonce = query.get(&apos;nonce&apos;, &apos;&apos;)</span><br><span class="line">        echostr = query.get(&apos;echostr&apos;, &apos;&apos;)</span><br><span class="line">        s = [timestamp, nonce, token]</span><br><span class="line">        # 1. 将token、timestamp、nonce三个参数进行字典序排序</span><br><span class="line">        s.sort()</span><br><span class="line">        # 2. 将三个参数字符串拼接成一个字符串进行sha1加密</span><br><span class="line">        s = &apos;&apos;.join(s)</span><br><span class="line">        # 3. 开发者获得加密后的字符串可与signature对比，标识该请求来源于微信</span><br><span class="line">        key = hashlib.sha1(s).hexdigest()</span><br><span class="line">        if (key == signature):</span><br><span class="line">            return make_response(echostr)</span><br></pre></td></tr></table></figure>
+
+<p><strong>遇到小问题</strong></p>
+<p>因为域名没有备案，所以无法通过域名设置，只能设置ip。</p>
+<h3 id="第二步-网页端配置"><a href="#第二步-网页端配置" class="headerlink" title="第二步 网页端配置"></a>第二步 网页端配置</h3><p>网页端提交后：</p>
+<p><img src="http://cl.ly/3H34353N1c1f/Image%202016-03-17%20at%2012.17.38%20%E4%B8%8A%E5%8D%88.png" alt></p>
+<h3 id="第三步-接收普通消息"><a href="#第三步-接收普通消息" class="headerlink" title="第三步 接收普通消息"></a>第三步 接收普通消息</h3><p>当普通微信用户向公众账号发消息时，微信服务器将POST消息的XML数据包到开发者填写的URL上。</p>
+<p>假如服务器无法保证在五秒内处理并回复，可以直接回复空串，微信服务器不会对此作任何处理，并且不会发起重试。</p>
+<p>消息类型：</p>
+<ul>
+<li>文本消息</li>
+<li>图片消息</li>
+<li>语音消息</li>
+<li>视频消息</li>
+<li>小视频消息</li>
+<li>地理位置消息</li>
+<li>链接消息</li>
+</ul>
+<h4 id="文本消息"><a href="#文本消息" class="headerlink" title="文本消息"></a>文本消息</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;xml&gt;</span><br><span class="line"> &lt;ToUserName&gt;&lt;![CDATA[toUser]]&gt;&lt;/ToUserName&gt;</span><br><span class="line"> &lt;FromUserName&gt;&lt;![CDATA[fromUser]]&gt;&lt;/FromUserName&gt; </span><br><span class="line"> &lt;CreateTime&gt;1348831860&lt;/CreateTime&gt;</span><br><span class="line"> &lt;MsgType&gt;&lt;![CDATA[text]]&gt;&lt;/MsgType&gt;</span><br><span class="line"> &lt;Content&gt;&lt;![CDATA[this is a test]]&gt;&lt;/Content&gt;</span><br><span class="line"> &lt;MsgId&gt;1234567890123456&lt;/MsgId&gt;</span><br><span class="line"> &lt;/xml&gt;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ToUserName</td>
+<td>开发者微信号</td>
+</tr>
+<tr>
+<td>FromUserName</td>
+<td>发送方帐号（一个OpenID）</td>
+</tr>
+<tr>
+<td>CreateTime</td>
+<td>消息创建时间 （整型）</td>
+</tr>
+<tr>
+<td>MsgType</td>
+<td>text</td>
+</tr>
+<tr>
+<td>Content</td>
+<td>文本消息内容</td>
+</tr>
+<tr>
+<td>MsgId</td>
+<td>消息id，64位整型</td>
+</tr>
+</tbody></table>
+<h3 id="第四步-被动回复消息"><a href="#第四步-被动回复消息" class="headerlink" title="第四步 被动回复消息"></a>第四步 被动回复消息</h3><p>被动回复消息，消息的类型有很多种，先从简单的文本开始。</p>
+<p>用户收到“该公众号暂时无法提供服务，请稍后再试”：原因：</p>
+<ul>
+<li>开发者在5秒内未回复任何内容</li>
+<li>开发者回复了异常数据，比如JSON数据等</li>
+</ul>
+<h4 id="回复文本消息"><a href="#回复文本消息" class="headerlink" title="回复文本消息"></a>回复文本消息</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;xml&gt;</span><br><span class="line">&lt;ToUserName&gt;&lt;![CDATA[toUser]]&gt;&lt;/ToUserName&gt;</span><br><span class="line">&lt;FromUserName&gt;&lt;![CDATA[fromUser]]&gt;&lt;/FromUserName&gt;</span><br><span class="line">&lt;CreateTime&gt;12345678&lt;/CreateTime&gt;</span><br><span class="line">&lt;MsgType&gt;&lt;![CDATA[text]]&gt;&lt;/MsgType&gt;</span><br><span class="line">&lt;Content&gt;&lt;![CDATA[你好]]&gt;&lt;/Content&gt;</span><br><span class="line">&lt;/xml&gt;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>是否必须</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ToUserName</td>
+<td>是</td>
+<td>接收方帐号（收到的OpenID）</td>
+</tr>
+<tr>
+<td>FromUserName</td>
+<td>是</td>
+<td>开发者微信号</td>
+</tr>
+<tr>
+<td>CreateTime</td>
+<td>是</td>
+<td>消息创建时间 （整型）</td>
+</tr>
+<tr>
+<td>MsgType</td>
+<td>是</td>
+<td>text</td>
+</tr>
+<tr>
+<td>Content</td>
+<td>是</td>
+<td>回复的消息内容（换行：在content中能够换行，微信客户端就支持换行显示）</td>
+</tr>
+</tbody></table>
+<p>虽然消息内容不一致，但是都是xml格式，所以需要有辅助处理xml格式的函数</p>
+<p>修改<br><a href>https://github.com/hay/xml2json/blob/master/xml2json.py
+</a></p>
+<p>主要修改是将这些方法封装成类，然后删除一些函数的参数，例如以下的options.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">def elem2json(elem, options, strip_ns=1, strip=1):</span><br></pre></td></tr></table></figure>
+
+<p>测试代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">from xml2json import *</span><br><span class="line"></span><br><span class="line">x = Xml2json()</span><br><span class="line">xml = &apos;&apos;&apos;&lt;xml&gt;</span><br><span class="line"> &lt;ToUserName&gt;&lt;![CDATA[toUser]]&gt;&lt;/ToUserName&gt;</span><br><span class="line"> &lt;FromUserName&gt;&lt;![CDATA[fromUser]]&gt;&lt;/FromUserName&gt;</span><br><span class="line"> &lt;CreateTime&gt;1348831860&lt;/CreateTime&gt;</span><br><span class="line"> &lt;MsgType&gt;&lt;![CDATA[text]]&gt;&lt;/MsgType&gt;</span><br><span class="line"> &lt;Content&gt;&lt;![CDATA[this is a test]]&gt;&lt;/Content&gt;</span><br><span class="line"> &lt;MsgId&gt;1234567890123456&lt;/MsgId&gt;</span><br><span class="line"> &lt;/xml&gt;&apos;&apos;&apos;</span><br><span class="line">j = x.xml2json(xml)</span><br><span class="line"></span><br><span class="line">print j</span><br><span class="line"></span><br><span class="line">a = x.json2xml(j)</span><br><span class="line"></span><br><span class="line">print a</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">test.py</span><br><span class="line">&#123;</span><br><span class="line">    &quot;xml&quot;: &#123;</span><br><span class="line">        &quot;Content&quot;: &quot;this is a test&quot;,</span><br><span class="line">        &quot;CreateTime&quot;: &quot;1348831860&quot;,</span><br><span class="line">        &quot;FromUserName&quot;: &quot;fromUser&quot;,</span><br><span class="line">        &quot;MsgId&quot;: &quot;1234567890123456&quot;,</span><br><span class="line">        &quot;MsgType&quot;: &quot;text&quot;,</span><br><span class="line">        &quot;ToUserName&quot;: &quot;toUser&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;xml&gt;&lt;FromUserName&gt;fromUser&lt;/FromUserName&gt;&lt;MsgId&gt;1234567890123456&lt;/MsgId&gt;&lt;ToUserName&gt;toUser&lt;/ToUserName&gt;&lt;Content&gt;this is a test&lt;/Content&gt;&lt;MsgType&gt;text&lt;/MsgType&gt;&lt;CreateTime&gt;1348831860&lt;/CreateTime&gt;&lt;/xml&gt;</span><br></pre></td></tr></table></figure>
+
+<p>与微信的格式对比后，发现json2xml这个函数没办法满足需求。可以看到转换前有CDATA，转换后就没有了。</p>
+<p><strong>Tips:</strong></p>
+<blockquote>
+<p>操作XML文件时，如果允许用户输入内容，例如∶”&lt; “、”&gt;”、”/“、””等，当生成XML时，会破坏了XML结构，使数据中断。<br>这就要用XML CDATA<br>在XML文档中的所有文本都会被解析器解析。<br>只有在CDATA部件之内的文本会被解析器忽略。</p>
+</blockquote>
+<p>找了半天，发现有帮助的文档只有：<br><a href>http://stackoverflow.com/questions/174890/how-to-output-cdata-using-elementtree
+</a></p>
+<p>这里介绍的解决方法就是重写_write方法，然后在_write方法中，判断是否是自定义的标签，如果是的，返回自定义的格式。<br>但是我重写了这个方法后，发现父类没有这个方法。所以这个解决办法不可用。</p>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/微信/" rel="tag"># 微信</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2018/05/17/Iptables基本知识/" rel="next" title="Iptables基础知识">
+                  <i class="fa fa-chevron-left"></i> Iptables基础知识
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2018/05/17/使用服务器推送技术实现在线视频/" rel="prev" title="使用服务器推送技术实现在线视频">
+                  使用服务器推送技术实现在线视频 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">XuQi</p>
+  <div class="site-description motion-element" itemprop="description"></div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-name">标签</span>
+        
+      </div>
+    
+  </nav>
+
+
+
+        </div>
+      </div>
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#第一步-服务器端配置"><span class="nav-number">1.</span> <span class="nav-text">第一步 服务器端配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第二步-网页端配置"><span class="nav-number">2.</span> <span class="nav-text">第二步 网页端配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第三步-接收普通消息"><span class="nav-number">3.</span> <span class="nav-text">第三步 接收普通消息</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#文本消息"><span class="nav-number">3.1.</span> <span class="nav-text">文本消息</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第四步-被动回复消息"><span class="nav-number">4.</span> <span class="nav-text">第四步 被动回复消息</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#回复文本消息"><span class="nav-number">4.1.</span> <span class="nav-text">回复文本消息</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">XuQi</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.3.0</div>
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+      </div>
+
+    
+
+  </div>
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+<script src="/js/utils.js?v=7.3.0"></script>
+  <script src="/js/motion.js?v=7.3.0"></script>
+
+
+  <script src="/js/schemes/muse.js?v=7.3.0"></script>
+
+
+<script src="/js/next-boot.js?v=7.3.0"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+  
+  <script src="/js/scrollspy.js?v=7.3.0"></script>
+<script src="/js/post-details.js?v=7.3.0"></script>
+
+
+</body>
+</html>

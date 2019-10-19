@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="generator" content="Hexo 3.9.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.3.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.3.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.3.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.3.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    save_scroll: false,
+    copycode: {"enable":false,"show_result":false,"style":null},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    }
+  };
+</script>
+
+  <meta name="description" content="C-V2X概述C-V2X内涵V2X 车用无线通信技术是将车辆与一切事物相连接。">
+<meta name="keywords" content="V2X">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C-V2X白皮书">
+<meta property="og:url" content="http://yoursite.com/2019/07/05/C-V2X白皮书/index.html">
+<meta property="og:site_name" content="XuQi&#39;s Blog">
+<meta property="og:description" content="C-V2X概述C-V2X内涵V2X 车用无线通信技术是将车辆与一切事物相连接。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/2019/07/05/C-V2X白皮书/image-20190705224220769.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/05/C-V2X白皮书/image-20190706000211262.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/05/C-V2X白皮书/image-20190706000240964.png">
+<meta property="og:updated_time" content="2019-10-19T12:19:36.707Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C-V2X白皮书">
+<meta name="twitter:description" content="C-V2X概述C-V2X内涵V2X 车用无线通信技术是将车辆与一切事物相连接。">
+<meta name="twitter:image" content="http://yoursite.com/2019/07/05/C-V2X白皮书/image-20190705224220769.png">
+  <link rel="canonical" href="http://yoursite.com/2019/07/05/C-V2X白皮书/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>C-V2X白皮书 | XuQi's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  <div class="container sidebar-position-left">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">XuQi's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+  </ul>
+
+    
+
+</nav>
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content page-post-detail">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/05/C-V2X白皮书/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="XuQi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="XuQi's Blog">
+    </span>
+      <header class="post-header">
+
+        
+          <h1 class="post-title" itemprop="name headline">C-V2X白皮书
+
+            
+          </h1>
+        
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-07-05 22:15:07" itemprop="dateCreated datePublished" datetime="2019-07-05T22:15:07+00:00">2019-07-05</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-10-19 12:19:36" itemprop="dateModified" datetime="2019-10-19T12:19:36+00:00">2019-10-19</time>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="C-V2X概述"><a href="#C-V2X概述" class="headerlink" title="C-V2X概述"></a>C-V2X概述</h2><h3 id="C-V2X内涵"><a href="#C-V2X内涵" class="headerlink" title="C-V2X内涵"></a>C-V2X内涵</h3><p>V2X 车用无线通信技术是将车辆与一切事物相连接。</p>
+<p><img src="/2019/07/05/C-V2X白皮书/image-20190705224220769.png" alt="image-20190705224220769"></p>
+<a id="more"></a>
+
+<h4 id="V2V-车与车"><a href="#V2V-车与车" class="headerlink" title="V2V 车与车"></a>V2V 车与车</h4><blockquote>
+<p>V2V是指通过车载终端进行车辆间的通信。车载终端可以实时获取周围车辆的车速、位置、行车情况等信息，车辆间也可以构成一个互动的平台，实时交换文字、图片和视频等信息。</p>
+</blockquote>
+<p><strong>作用</strong>：避免或减少交通事故、车辆监督管理等</p>
+<h4 id="V2I-车与路-Infrastructure"><a href="#V2I-车与路-Infrastructure" class="headerlink" title="V2I 车与路 Infrastructure"></a>V2I 车与路 Infrastructure</h4><blockquote>
+<p>V2I是指车载设备与路侧基础设施(如红绿灯、交通摄像头、路侧单元等)进行通信，路侧基础设施也可以获取附近区域车辆的信息并发布各种实时信息。</p>
+</blockquote>
+<p><strong>作用</strong>：实时信息服务、车辆监控管理、 不停车收费等 </p>
+<h4 id="V2P-车与人-Pedestrian"><a href="#V2P-车与人-Pedestrian" class="headerlink" title="V2P 车与人 Pedestrian"></a>V2P 车与人 Pedestrian</h4><blockquote>
+<p>V2P是指弱势交通群体(包括行人、骑行者等)使用用户设备(如手机、笔记本电脑等)与车载设备进行通信。</p>
+</blockquote>
+<p><strong>作用</strong>：避免或减少交通事故、信息服务等</p>
+<h4 id="V2N-车与网络-Network"><a href="#V2N-车与网络-Network" class="headerlink" title="V2N 车与网络 Network"></a>V2N 车与网络 Network</h4><blockquote>
+<p>V2N是指车载设备通过接入网/核心网与云平台连接，云平台与车辆之间进行数据交互，并对获取的数<br>据进行存储和处理，提供车辆所需要的各类应用服务。</p>
+</blockquote>
+<p><strong>作用</strong>：车辆导航、车辆远程监控、紧急救援、信息娱乐服务等</p>
+<p><strong>C-V2X中的C是指蜂窝(Cellular)</strong></p>
+<p>它是基于3G/4G/5G等蜂窝网通信技术演进形成的车用无线通信技术，包含了两种通信接口:</p>
+<ul>
+<li>车、人、路之间的短距离直接通信接口(PC5)，</li>
+<li>是终端和基站之间的通信接口(Uu)，可实现长距离和更大范围的可靠通信。</li>
+</ul>
+<h3 id="C-V2X典型场景和应用"><a href="#C-V2X典型场景和应用" class="headerlink" title="C-V2X典型场景和应用"></a>C-V2X典型场景和应用</h3><h4 id="信息服务场景"><a href="#信息服务场景" class="headerlink" title="信息服务场景"></a>信息服务场景</h4><p><strong>紧急呼叫</strong>：车辆发生紧急情况时，车辆能自动或者手动通过网络发起紧急救援。</p>
+<h4 id="交通安全场景"><a href="#交通安全场景" class="headerlink" title="交通安全场景"></a>交通安全场景</h4><p><strong>交叉路口碰撞预警</strong>：在交叉入口，车辆探测到与侧向行驶的车辆有碰撞风险时，预警声音或者影像提醒避免碰撞。</p>
+<ul>
+<li><p><strong>初期:</strong></p>
+<p>稀疏或无RSU条件，T-BOX/OBU渗透率10%~20%条件，支持基本辅助驾驶功能和道路安全预警功能，可小幅度提升目前已有辅助驾驶服务和安全预警服务的用户体验，该业务与整车厂、Tier1企业、车联网服务提供企业、智能出行应用服务提供企业密切关联。</p>
+</li>
+<li><p><strong>中期:</strong></p>
+<p>中等覆盖度RSU条件，OBU渗透率40%~60%条件，推进3级自动驾驶业务演进，促进整车厂及Tier1企业开发深度融合C-V2X信息的辅助/自动驾驶服务，推进相关控制策略的演进，提升用户体验，推进3km范围以内路径规划服务的精细化，提升服务的实时自适应能力，将其与智慧出行业务进行密切贴合。</p>
+</li>
+<li><p><strong>成熟期:</strong></p>
+<p>全覆盖RSU条件，OBU渗透率 80%~100%条件，支持全自动驾驶服务，支撑 车载AI演进，整车厂及Tier1企业将通过已有 的技术积累展开市场争夺战，自动驾驶服务及 导航服务将更加注重用户体验，产业链涉及的 相关企业将通过用户体验抢夺客户。 </p>
+</li>
+</ul>
+<h4 id="交通效率场景"><a href="#交通效率场景" class="headerlink" title="交通效率场景"></a>交通效率场景</h4><p><strong>车速引导</strong>：指路边单元(RSU)收集交通灯、信号灯的配时信息，并将信号灯当前所处状态及当前状态剩余时间等信息广播给周围车辆。车辆收到该信息后，结合当前车速、位置等信息，计算出建议行驶速度，并向车主进行提示，<br>以提高车辆不停车通过交叉口的可能性。</p>
+<ul>
+<li><p><strong>初期:</strong></p>
+<p>无跨平台融合条件，以C-V2X数据支持效率类业务，以局部交通效率提升和节能减排业务为主，如通过速度建议、路口通过提示等已有的应用服务类型，并支持车辆运营企业开发相关服务，如货车车队跟随、公交车错<br>峰到站等。</p>
+</li>
+<li><p><strong>中期:</strong></p>
+<p>局部跨平台融合条件，C-V2X数据与其他运营数据平台(如百度云、阿里云等非官方)内嵌融合，可提升导航服务和智慧出行服务的用户体验，提升交通效率，具备驾驶行为反馈通路，优化驾驶行为(包括人类和机<br>器)，实现节能减排。</p>
+</li>
+<li><p><strong>成熟期:</strong></p>
+<p>全面跨平台融合条件，C-V2X与官方数据平台和企业数据平台深度融合，可实现道路行驶状态和用户选择倾向的精密评价与预测，全面支持各自交通服务类软件的用户体验升级，节能减排类业务由个体优化逐步发展<br>为全局优化。</p>
+</li>
+</ul>
+<h4 id="自动驾驶场景"><a href="#自动驾驶场景" class="headerlink" title="自动驾驶场景"></a>自动驾驶场景</h4><p><strong>车辆编队行驶：</strong></p>
+<p>指头车为有人驾驶车辆或自主式自动驾驶车辆，后车通过V2X通信与头车保持实时信息交互，在一定的速度下实现一定车间距的多车稳定跟车，具备车道保持与跟踪、协作式自适应巡航、协作式紧急制动、协作式换道提醒、出入编队等多种应用功能。</p>
+<p><strong>远程遥控驾驶</strong></p>
+<p>驾驶员通过驾驶操控台远程操作车辆行驶。搭载在车辆上的摄像头、雷达等，通过5G网络大带宽将多路感知信息实时传达到远程驾驶操控台;驾驶员对于车辆方向盘、油门和刹车的操控信号，通过5G网络的低时延高可靠实时传达到车辆上，轻松准确的对车辆进行前进、加速、刹车、转弯、后退等驾驶操作。</p>
+<h3 id="C-V2X关键技术"><a href="#C-V2X关键技术" class="headerlink" title="C-V2X关键技术"></a>C-V2X关键技术</h3><h4 id="PC5接口关键技术-直连通信接口"><a href="#PC5接口关键技术-直连通信接口" class="headerlink" title="PC5接口关键技术  (直连通信接口)"></a>PC5接口关键技术  (直连通信接口)</h4><ul>
+<li><p>物理层结构进行增强，以便支持更高的速度</p>
+</li>
+<li><p>支持全球卫星导航系统同步</p>
+</li>
+<li><p>更加高效的资源分配机制以及拥塞控制机制</p>
+<ul>
+<li>PC5接口支持调度式的资源分配方式(Mode-3)和终端自主式的资源分配方式(Mode-4)</li>
+</ul>
+</li>
+</ul>
+<h4 id="Uu接口关键技术-蜂窝通信接口"><a href="#Uu接口关键技术-蜂窝通信接口" class="headerlink" title="Uu接口关键技术 (蜂窝通信接口)"></a>Uu接口关键技术 (蜂窝通信接口)</h4><ul>
+<li>上下行传输增强</li>
+<li>多接入边缘计算研究</li>
+</ul>
+<h3 id="C-V2X标准化"><a href="#C-V2X标准化" class="headerlink" title="C-V2X标准化"></a>C-V2X标准化</h3><p>C-V2X的标准化可以分为3个阶段。</p>
+<ol>
+<li>支持<strong>LTE-V2X的3GPP R14版本</strong> 标准已于2017年正式发布 </li>
+<li>支持<strong>LTE-V2X增强 (LTE-eV2X)的3GPP R15版本</strong>标准于2018年6 月正式完成</li>
+<li>支持<strong>5G-V2X的3GPP R16+</strong>版本标 准宣布于2018年6月启动研究，将与LTE-V2X/ LTE-eV2X形成互补关系。 </li>
+</ol>
+<h2 id><a href="#" class="headerlink" title></a><img src="/2019/07/05/C-V2X白皮书/image-20190706000211262.png" alt="image-20190706000211262"></h2><p><img src="/2019/07/05/C-V2X白皮书/image-20190706000240964.png" alt="image-20190706000240964"></p>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/V2X/" rel="tag"># V2X</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2019/07/05/wireshark插件开发之vsomeip协议/" rel="next" title="wireshark插件开发之vsomeip协议">
+                  <i class="fa fa-chevron-left"></i> wireshark插件开发之vsomeip协议
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2019/07/06/V2X之V2V介绍/" rel="prev" title="V2X之V2V介绍">
+                  V2X之V2V介绍 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">XuQi</p>
+  <div class="site-description motion-element" itemprop="description"></div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-name">标签</span>
+        
+      </div>
+    
+  </nav>
+
+
+
+        </div>
+      </div>
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#C-V2X概述"><span class="nav-number">1.</span> <span class="nav-text">C-V2X概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#C-V2X内涵"><span class="nav-number">1.1.</span> <span class="nav-text">C-V2X内涵</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#V2V-车与车"><span class="nav-number">1.1.1.</span> <span class="nav-text">V2V 车与车</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#V2I-车与路-Infrastructure"><span class="nav-number">1.1.2.</span> <span class="nav-text">V2I 车与路 Infrastructure</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#V2P-车与人-Pedestrian"><span class="nav-number">1.1.3.</span> <span class="nav-text">V2P 车与人 Pedestrian</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#V2N-车与网络-Network"><span class="nav-number">1.1.4.</span> <span class="nav-text">V2N 车与网络 Network</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#C-V2X典型场景和应用"><span class="nav-number">1.2.</span> <span class="nav-text">C-V2X典型场景和应用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#信息服务场景"><span class="nav-number">1.2.1.</span> <span class="nav-text">信息服务场景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#交通安全场景"><span class="nav-number">1.2.2.</span> <span class="nav-text">交通安全场景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#交通效率场景"><span class="nav-number">1.2.3.</span> <span class="nav-text">交通效率场景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自动驾驶场景"><span class="nav-number">1.2.4.</span> <span class="nav-text">自动驾驶场景</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#C-V2X关键技术"><span class="nav-number">1.3.</span> <span class="nav-text">C-V2X关键技术</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#PC5接口关键技术-直连通信接口"><span class="nav-number">1.3.1.</span> <span class="nav-text">PC5接口关键技术  (直连通信接口)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Uu接口关键技术-蜂窝通信接口"><span class="nav-number">1.3.2.</span> <span class="nav-text">Uu接口关键技术 (蜂窝通信接口)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#C-V2X标准化"><span class="nav-number">1.4.</span> <span class="nav-text">C-V2X标准化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">2.</span> <span class="nav-text"></span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">XuQi</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.3.0</div>
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+      </div>
+
+    
+
+  </div>
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+<script src="/js/utils.js?v=7.3.0"></script>
+  <script src="/js/motion.js?v=7.3.0"></script>
+
+
+  <script src="/js/schemes/muse.js?v=7.3.0"></script>
+
+
+<script src="/js/next-boot.js?v=7.3.0"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+  
+  <script src="/js/scrollspy.js?v=7.3.0"></script>
+<script src="/js/post-details.js?v=7.3.0"></script>
+
+
+</body>
+</html>
